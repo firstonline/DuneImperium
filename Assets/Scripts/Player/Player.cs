@@ -1,28 +1,45 @@
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-[Serializable]
-public class PlayerData : IEquatable<PlayerData>
+public struct PlayerData : INetworkSerializable
 {
     public int RandomData;
 
-    public bool Equals(PlayerData other)
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
-        return other.RandomData == RandomData;
+        serializer.SerializeValue(ref RandomData);
     }
 }
 
 public class Player : NetworkBehaviour
 {
-    NetworkVariable<int> _networkVariable = new NetworkVariable<int>();
+    [SerializeField] string _connectionScreen;
+    [SerializeField] Button _leaveSessionButton;
 
-    void Awake()
+    NetworkVariable<PlayerData> _networkVariable = new NetworkVariable<PlayerData>();
+
+
+    public override void OnNetworkSpawn()
     {
-        _networkVariable.OnValueChanged += (prevData, newData) =>
+        base.OnNetworkSpawn();
+
+        if (NetworkManager.Singleton == null)
         {
-            Debug.Log($"Data Changed {newData}");
-        };
+            // Can't listen to something that doesn't exist >:(
+            throw new Exception($"");
+        }
+        _networkVariable.OnValueChanged += (oldData, newData) => { Debug.Log($"NewData {newData.RandomData}"); };
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
     }
 
     public void Testing()
@@ -30,10 +47,31 @@ public class Player : NetworkBehaviour
         ServerRpc();
     }
 
+    private void OnClientDisconnected(ulong clientID)
+    {
+        if (clientID == NetworkManager.Singleton.LocalClientId)
+        {
+            if (!NetworkManager.Singleton.IsHost)
+            {
+                _leaveSessionButton.onClick.Invoke();
+            }
+            SceneManager.LoadSceneAsync(_connectionScreen);
+        }
+    }
+
     [ServerRpc(RequireOwnership = false)]
     void ServerRpc()
     {
-        _networkVariable.Value++;
+        var updatedValue = _networkVariable.Value;
+        updatedValue.RandomData++;
+
+        _networkVariable.Value = updatedValue;
+        UpdateClientRpc();
+    }
+
+    [ClientRpc]
+    void UpdateClientRpc()
+    {
     }
 
 }
