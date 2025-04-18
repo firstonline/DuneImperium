@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb79b12cf4987684f8e7fd51577a537f, type: 3}
+  m_Name: AgentAreaDatabase
+  m_EditorClassIdentifier: 
+  Items:
+  - {fileID: 11400000, guid: c022f5f34303d40439f718416f296459, type: 2}
+  - {fileID: 11400000, guid: 284240b25f69d454e8fab5a4de822e96, type: 2}
+  - {fileID: 11400000, guid: 7f939654a3d3c684e88549b18b6c078c, type: 2}
