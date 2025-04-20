@@ -11,5 +11,5 @@ public enum RequirementType
 public class Requirement
 {
     public RequirementType RequirementType;
-    public BaseResourceDefinition Resource;
+    public GameElementDefinition Resource;
 }

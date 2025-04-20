@@ -9,11 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e157e386ed461b74ea70057fce903534, type: 3}
+  m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
   m_Name: AreaSpiceRefineryDefinition
   m_EditorClassIdentifier: 
   _id: 2
-  Name: SpiceRefinery
+  Name: Spice Refinery
+  AgentIcon: {fileID: 11400000, guid: ae54809f3817ed04e9a46c74e953419a, type: 2}
+  Reveal:
+    RewardType: 0
+    Resource: {fileID: 0}
+    Quantity: 0
   Exchanges:
   - Requirements: []
     Costs: []
@@ -30,3 +35,9 @@ MonoBehaviour:
     - RewardType: 0
       Resource: {fileID: 11400000, guid: 10f5833f993119f498cfa09770545970, type: 2}
       Quantity: 4
+  IsMakerBoard: 0
+  IsCombatArea: 1
+  ImperialFlagReward:
+    Requirements: []
+    Costs: []
+    Rewards: []

@@ -9,11 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e157e386ed461b74ea70057fce903534, type: 3}
+  m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
   m_Name: AreaArrakeenDefinition
   m_EditorClassIdentifier: 
   _id: 0
   Name: Arrakeen
+  AgentIcon: {fileID: 11400000, guid: ae54809f3817ed04e9a46c74e953419a, type: 2}
+  Reveal:
+    RewardType: 0
+    Resource: {fileID: 0}
+    Quantity: 0
   Exchanges:
   - Requirements: []
     Costs: []
@@ -24,3 +29,9 @@ MonoBehaviour:
     - RewardType: 0
       Resource: {fileID: 11400000, guid: 6cc3788f2570dcf4bb3efbfd03533338, type: 2}
       Quantity: 1
+  IsMakerBoard: 0
+  IsCombatArea: 1
+  ImperialFlagReward:
+    Requirements: []
+    Costs: []
+    Rewards: []

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb79b12cf4987684f8e7fd51577a537f, type: 3}
+  m_Script: {fileID: 11500000, guid: fab0467cc3b16c343aecd50a105b33d2, type: 3}
   m_Name: AgentAreaDatabase
   m_EditorClassIdentifier: 
   Items:
