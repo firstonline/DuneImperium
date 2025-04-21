@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class ExchangeDefinition
 {
-    public List<Requirement> Requirements;
+    public List<RequirementDefinition> Requirements;
     public List<CostDefinition> Costs;
     public List<RewardDefinition> Rewards;
 }

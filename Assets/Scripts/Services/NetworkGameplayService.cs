@@ -80,7 +80,6 @@ public struct GameData : INetworkSerializable
 
 public class NetworkGameplayService : NetworkBehaviour
 {
-    [Inject] ResourcesDatabase _resourcesDatabase;
     [Inject] AreasService _areasService;
 
     [SerializeField] string _connectionScreen;

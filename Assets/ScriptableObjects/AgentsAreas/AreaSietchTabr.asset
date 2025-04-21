@@ -12,34 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
   m_Name: AreaSietchTabr
   m_EditorClassIdentifier: 
-  _id: 3
+  _id: 5
   Name: Sietch Tabr
   AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
   Reveal:
-    RewardType: 0
-    Resource: {fileID: 0}
+    Action: {fileID: 0}
     Quantity: 0
   Exchanges:
-  - Requirements: []
+  - Requirements:
+    - Action: {fileID: 11400000, guid: 1dc0d0c47a39ae64480c4df352c95a31, type: 2}
+      Quantity: 2
     Costs: []
     Rewards:
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: 8501e200814ee8349a33bf46edeb055c, type: 2}
+    - Action: {fileID: 11400000, guid: 156b9912c4dc4be4192e60f3b4196133, type: 2}
       Quantity: 1
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: cb06d4458a22db04c945c06e815a1db2, type: 2}
+    - Action: {fileID: 11400000, guid: 08f3d3c6e4cca3b44b937642c5032d18, type: 2}
       Quantity: 1
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: 5beeffd044d98c14e8bbe726bcd2cca7, type: 2}
+    - Action: {fileID: 11400000, guid: 5c4cf0dd83b09dc48a8fce5e8ffe99c2, type: 2}
       Quantity: 1
-  - Requirements: []
+  - Requirements:
+    - Action: {fileID: 11400000, guid: 1dc0d0c47a39ae64480c4df352c95a31, type: 2}
+      Quantity: 2
     Costs: []
     Rewards:
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: 5beeffd044d98c14e8bbe726bcd2cca7, type: 2}
+    - Action: {fileID: 11400000, guid: 4d1be183a6d9de14285adca06b28ea9f, type: 2}
       Quantity: 1
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: d227dc8940fac8447b23e41384fb5dfc, type: 2}
+    - Action: {fileID: 11400000, guid: 08f3d3c6e4cca3b44b937642c5032d18, type: 2}
       Quantity: 1
   IsMakerBoard: 0
   IsCombatArea: 1

@@ -12,31 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
   m_Name: AreaGatherSupport
   m_EditorClassIdentifier: 
-  _id: 0
+  _id: 2
   Name: Gather Support
   AgentIcon: {fileID: 11400000, guid: eda63889efe087e4b988a3279d2839be, type: 2}
   Reveal:
-    RewardType: 0
-    Resource: {fileID: 0}
+    Action: {fileID: 0}
     Quantity: 0
   Exchanges:
   - Requirements: []
     Costs: []
     Rewards:
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: cb06d4458a22db04c945c06e815a1db2, type: 2}
+    - Action: {fileID: 11400000, guid: 5c4cf0dd83b09dc48a8fce5e8ffe99c2, type: 2}
       Quantity: 2
   - Requirements: []
     Costs:
-    - CostType: 0
-      Resource: {fileID: 11400000, guid: 10f5833f993119f498cfa09770545970, type: 2}
+    - Action: {fileID: 11400000, guid: f303749ae43ae60439b8e4a4f9b75aea, type: 2}
       Quantity: 2
     Rewards:
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: cb06d4458a22db04c945c06e815a1db2, type: 2}
+    - Action: {fileID: 11400000, guid: 5c4cf0dd83b09dc48a8fce5e8ffe99c2, type: 2}
       Quantity: 2
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: 5beeffd044d98c14e8bbe726bcd2cca7, type: 2}
+    - Action: {fileID: 11400000, guid: 08f3d3c6e4cca3b44b937642c5032d18, type: 2}
       Quantity: 1
   IsMakerBoard: 0
   IsCombatArea: 0

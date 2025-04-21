@@ -6,16 +6,13 @@ using UnityEngine;
 
 public class PlayerInfoUI : MonoBehaviour
 {
-
     [Inject] NetworkGameplayService networkGameplayService;
-    [Inject] ResourcesDatabase _resourcesDatabase;
 
     [SerializeField] BasicResourceUI _basicResourcePrefab;
     CompositeDisposable _disposables = new();
 
     void Awake()
     {
-      
     }
 
     void OnDestroy()

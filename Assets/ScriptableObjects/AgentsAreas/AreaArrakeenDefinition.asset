@@ -12,29 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
   m_Name: AreaArrakeenDefinition
   m_EditorClassIdentifier: 
-  _id: 0
+  _id: 1
   Name: Arrakeen
   AgentIcon: {fileID: 11400000, guid: ae54809f3817ed04e9a46c74e953419a, type: 2}
   Reveal:
-    RewardType: 0
-    Resource: {fileID: 0}
+    Action: {fileID: 0}
     Quantity: 0
   Exchanges:
   - Requirements: []
     Costs: []
     Rewards:
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: cb06d4458a22db04c945c06e815a1db2, type: 2}
+    - Action: {fileID: 11400000, guid: 5c4cf0dd83b09dc48a8fce5e8ffe99c2, type: 2}
       Quantity: 1
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: 6cc3788f2570dcf4bb3efbfd03533338, type: 2}
+    - Action: {fileID: 11400000, guid: 88e512a41e46a9c409a8bd84744337c7, type: 2}
       Quantity: 1
   IsMakerBoard: 1
   IsCombatArea: 1
   ImperialFlagReward:
     Requirements: []
     Costs: []
-    Rewards:
-    - RewardType: 0
-      Resource: {fileID: 11400000, guid: 10f5833f993119f498cfa09770545970, type: 2}
-      Quantity: 1
+    Rewards: []

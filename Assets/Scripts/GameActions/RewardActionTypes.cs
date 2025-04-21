@@ -1,0 +1,29 @@
+using UnityEngine;
+
+public enum RewardActionTypes
+{
+    AddTroop = 0,
+    AddSpice = 1,
+    AddWater = 2,
+    AddSolari = 3,
+    AddFremenInfluence = 4,
+    AddBenneGesseritInfluence = 5,
+    AddSpacingGuildInfluence = 6,
+    AddEmperorInfluence = 7,
+    AddVictoryPoints = 8,
+    AddAgent = 9,
+    RecallAgent = 10,
+    AddWorm = 11,
+    AddPersuation = 12,
+    AddCombatSword = 13,
+    AddChoam = 14,
+    AddCouncilSeat = 15,
+    DrawCard = 16,
+    AddCard = 17,
+    AddIntrigue = 18,
+    AddAnyInfluence = 19,
+    Add2DifferentInfluence = 20,
+    BreakWall = 21,
+    AddSpy = 22,
+    AddMakerHook = 23,
+}

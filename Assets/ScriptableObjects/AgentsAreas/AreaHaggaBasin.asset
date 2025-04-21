@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
+  m_Name: AreaHaggaBasin
+  m_EditorClassIdentifier: 
+  _id: 3
+  Name: Hagga Basin
+  AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
+  Reveal:
+    Action: {fileID: 0}
+    Quantity: 0
+  Exchanges:
+  - Requirements: []
+    Costs:
+    - Action: {fileID: 11400000, guid: 276cf1359ef6681429c9715af5333cff, type: 2}
+      Quantity: 1
+    Rewards:
+    - Action: {fileID: 11400000, guid: 9434dc0a093ac5641b836ebbc17b757e, type: 2}
+      Quantity: 2
+  - Requirements:
+    - Action: {fileID: 11400000, guid: 221e9c5294cda574b980d94ad614f7c3, type: 2}
+      Quantity: 0
+    Costs:
+    - Action: {fileID: 11400000, guid: 276cf1359ef6681429c9715af5333cff, type: 2}
+      Quantity: 1
+    Rewards:
+    - Action: {fileID: 11400000, guid: 9a797ed31808f1a4e82cf5473451fd98, type: 2}
+      Quantity: 1
+  IsMakerBoard: 0
+  IsCombatArea: 1
+  ImperialFlagReward:
+    Requirements: []
+    Costs: []
+    Rewards: []

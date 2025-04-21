@@ -21,40 +21,41 @@ public class AreasService : NetworkBehaviour
 
         if (CanVisitArea(clientId, agentArea, selectedExchange))
         {
-            var gameData = _networkGameplayService.GameData;
-            var playerData = gameData.Players[(int)clientId];
-            var exchange = agentArea.Exchanges[selectedExchange];
-
             bool canPay = true;
-            foreach (var cost in exchange.Costs)
-            {
-                if (!playerData.Items.TryGetValue(cost.Resource.ID, out int inventoryQuantity) || inventoryQuantity < cost.Quantity)
-                {
-                    canPay = false;
-                    break;
-                }
-            }
 
-            if (canPay)
-            {
-                foreach (var cost in exchange.Costs)
-                {
-                    playerData.Items[cost.Resource.ID] -= cost.Quantity;
-                }
+            //var gameData = _networkGameplayService.GameData;
+            //var playerData = gameData.Players[(int)clientId];
+            //var exchange = agentArea.Exchanges[selectedExchange];
 
-                foreach (var reward in exchange.Rewards)
-                {
-                    if (!playerData.Items.ContainsKey(reward.Resource.ID))
-                    {
-                        playerData.Items.Add(reward.Resource.ID, 0);
-                    }
-                    playerData.Items[reward.Resource.ID] += reward.Quantity;
-                }
+            //foreach (var cost in exchange.Costs)
+            //{
+            //    if (!playerData.Items.TryGetValue(cost.Resource.ID, out int inventoryQuantity) || inventoryQuantity < cost.Quantity)
+            //    {
+            //        canPay = false;
+            //        break;
+            //    }
+            //}
 
-                gameData.Players[(int)clientId] = playerData;
-                gameData.RandomData = gameData.RandomData + 1; // this enforce network variable change
-                _networkGameplayService.UpdateGameData(gameData);
-            }
+            //if (canPay)
+            //{
+            //    foreach (var cost in exchange.Costs)
+            //    {
+            //        playerData.Items[cost.Resource.ID] -= cost.Quantity;
+            //    }
+
+            //    foreach (var reward in exchange.Rewards)
+            //    {
+            //        if (!playerData.Items.ContainsKey(reward.Resource.ID))
+            //        {
+            //            playerData.Items.Add(reward.Resource.ID, 0);
+            //        }
+            //        playerData.Items[reward.Resource.ID] += reward.Quantity;
+            //    }
+
+            //    gameData.Players[(int)clientId] = playerData;
+            //    gameData.RandomData = gameData.RandomData + 1; // this enforce network variable change
+            //    _networkGameplayService.UpdateGameData(gameData);
+            //}
            
             VisitAgentAreaResponseClientRpc(canPay, rpcParams.Receive.SenderClientId);
         }
