@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af36689497a7236499c5ad535397a608, type: 3}
   m_Name: Solari
   m_EditorClassIdentifier: 
-  _id: 0
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  _id: 5
+  Icon: {fileID: 21300000, guid: 877a2d701f001c14db80b6179f9d2eba, type: 3}

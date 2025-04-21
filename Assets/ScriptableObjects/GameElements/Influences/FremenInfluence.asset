@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64dac3e3dc47a5d4db78d7383ee652f3, type: 3}
   m_Name: FremenInfluence
   m_EditorClassIdentifier: 
-  _id: 1
+  _id: 3
   Icon: {fileID: 21300000, guid: e04fe15d30dfa47249081e8067a544c5, type: 3}
   InfluenceFaction: 0

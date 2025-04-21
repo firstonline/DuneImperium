@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Influence", menuName = "ScriptableObjects/Resources/Influence")]
-public class InfluenceDefinition : GameElementDefinition
+public class InfluenceDefinition : BaseResourceDefinition
 {
     public InfluenceFaction InfluenceFaction;
 }

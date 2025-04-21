@@ -29,9 +29,12 @@ MonoBehaviour:
     - RewardType: 0
       Resource: {fileID: 11400000, guid: 6cc3788f2570dcf4bb3efbfd03533338, type: 2}
       Quantity: 1
-  IsMakerBoard: 0
+  IsMakerBoard: 1
   IsCombatArea: 1
   ImperialFlagReward:
     Requirements: []
     Costs: []
-    Rewards: []
+    Rewards:
+    - RewardType: 0
+      Resource: {fileID: 11400000, guid: 10f5833f993119f498cfa09770545970, type: 2}
+      Quantity: 1

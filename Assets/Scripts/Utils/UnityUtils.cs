@@ -3,19 +3,5 @@ using UnityEngine;
 
 public static class UnityUtils
 {
-    public static void DestroyAllChildren(Transform parent)
-    {
-        foreach (Transform child in parent)
-        {
-            GameObject.DestroyImmediate(child.gameObject);
-        }
-    }
-
-    public static void HideAllChildren(Transform parent)
-    {
-        foreach (Transform child in parent)
-        {
-            child.gameObject.SetActive(false);
-        }
-    }
+    
 }

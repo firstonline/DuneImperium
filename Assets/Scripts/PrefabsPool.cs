@@ -8,14 +8,12 @@ public class PrefabsPool<T> where T : UnityEngine.Object
     T _prefab;
     Transform _parent;
     int _capacity;
-    DiContainer _container;
     List<T> _activeItems;
 
     ObjectPool<T> _pool;
 
-    public PrefabsPool(T prefab, Transform parent, int capacity, DiContainer container)
+    public PrefabsPool(T prefab, Transform parent, int capacity)
     {
-        _container = container;
         _prefab = prefab;
         _parent = parent;
         _capacity = capacity;
@@ -28,11 +26,11 @@ public class PrefabsPool<T> where T : UnityEngine.Object
                 {
                     if (_prefab is Component component)
                     {
-                        return _container.InstantiatePrefabForComponent<T>(_prefab, _parent);
+                        return GameObject.Instantiate(_prefab, _parent);
                     }
                     else if (_prefab is GameObject go)
                     {
-                        return _container.InstantiatePrefab(go, _parent) as T;
+                        return GameObject.Instantiate(go, _parent) as T;
                     }
                     return default;
                 },
@@ -63,6 +61,13 @@ public class PrefabsPool<T> where T : UnityEngine.Object
                     _activeItems.Remove(objectToRelease);
                 }
             );
+
+        var children = _parent.GetComponentsInChildren<T>(true);
+
+        foreach ( var child in children)
+        {
+            _pool.Release(child);
+        }
     }
 
     public T Get()

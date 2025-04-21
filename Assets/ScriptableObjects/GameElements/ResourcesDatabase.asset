@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: ResourcesDatabase
   m_EditorClassIdentifier: 
   Items:
+  - {fileID: 11400000, guid: 54b9736182b83db429450b5590027a6f, type: 2}
   - {fileID: 11400000, guid: 6cc3788f2570dcf4bb3efbfd03533338, type: 2}
+  - {fileID: 11400000, guid: df596e72630f0b8439d64cbf9ec75f6c, type: 2}
   - {fileID: 11400000, guid: b4d63ac504f17784a9c6e09d5962b9d4, type: 2}
   - {fileID: 11400000, guid: bbd26ce0996927744859738eca36fe0c, type: 2}
   - {fileID: 11400000, guid: 10f5833f993119f498cfa09770545970, type: 2}
+  - {fileID: 11400000, guid: ba27d1f73e9a2404b88c69b5d7b48186, type: 2}
   - {fileID: 11400000, guid: 0146b47a540326a4ca0bbcf556245acc, type: 2}
   - {fileID: 11400000, guid: cb06d4458a22db04c945c06e815a1db2, type: 2}
   - {fileID: 11400000, guid: 8e567c8ffad45ac4fab1242fd620cda8, type: 2}

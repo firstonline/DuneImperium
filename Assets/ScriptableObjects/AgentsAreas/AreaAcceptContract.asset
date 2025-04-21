@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
+  m_Name: AreaAcceptContract
+  m_EditorClassIdentifier: 
+  _id: 0
+  Name: Accept Contract
+  AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
+  Reveal:
+    RewardType: 0
+    Resource: {fileID: 0}
+    Quantity: 0
+  Exchanges:
+  - Requirements: []
+    Costs: []
+    Rewards:
+    - RewardType: 0
+      Resource: {fileID: 11400000, guid: 6cc3788f2570dcf4bb3efbfd03533338, type: 2}
+      Quantity: 1
+    - RewardType: 0
+      Resource: {fileID: 11400000, guid: 31de180018c5de2429550300ebb0283f, type: 2}
+      Quantity: 1
+  IsMakerBoard: 0
+  IsCombatArea: 0
+  ImperialFlagReward:
+    Requirements: []
+    Costs: []
+    Rewards: []

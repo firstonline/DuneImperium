@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64dac3e3dc47a5d4db78d7383ee652f3, type: 3}
   m_Name: BeneGesseritInfluence
   m_EditorClassIdentifier: 
-  _id: 1
+  _id: 0
   Icon: {fileID: 21300000, guid: 179d926314682482e89e3253c0087ece, type: 3}
   InfluenceFaction: 0

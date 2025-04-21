@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3d5812d49e79249a740ee439cae39d, type: 3}
   m_Name: VictoryPoint
   m_EditorClassIdentifier: 
-  _id: 6
+  _id: 9
   Icon: {fileID: 21300000, guid: 2a507f339f68c465cb98ed7d10af337c, type: 3}

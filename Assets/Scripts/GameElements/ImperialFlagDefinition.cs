@@ -2,6 +2,6 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "VictoryFlag", menuName = "ScriptableObjects/Resources/VictoryFlag")]
-public class ImperialFlagDefinition : MonoBehaviour
+public class ImperialFlagDefinition : BaseResourceDefinition
 {
 }

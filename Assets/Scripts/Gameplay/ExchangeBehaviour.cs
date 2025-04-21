@@ -1,6 +1,6 @@
 ﻿using System.Collections;
+using UniDi;
 using UnityEngine;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class ExchangeBehaviour : MonoBehaviour
 {
@@ -10,32 +10,38 @@ public class ExchangeBehaviour : MonoBehaviour
     [SerializeField] CostBehaviour _costPrefab;
     [SerializeField] GameObject _separator;
 
-    public void Setup(ExchangeDefinition exchange)
+    public void Setup(ExchangeDefinition exchange, bool hideCost = false)
     {
-        UnityUtils.HideAllChildren(_rewardsParent);
-        UnityUtils.HideAllChildren(_costParent);
+        var rewardsPool = new PrefabsPool<RewardBehaviour>(_rewardPrefab, _rewardsParent, 10);
+        var costsPool = new PrefabsPool<CostBehaviour>(_costPrefab, _costParent, 10);
 
         foreach (var reward in exchange.Rewards)
         {
-            var rewardBehaviour = Instantiate(_rewardPrefab, _rewardsParent);
+            var rewardBehaviour = rewardsPool.Get();
             rewardBehaviour.Setup(reward);
         }
-
-        if (exchange.Costs.Count == 0)
+        if (hideCost)
         {
             _separator.gameObject.SetActive(false);
         }
         else
         {
-            _separator.gameObject.SetActive(true);
-
-            foreach (var cost in exchange.Costs)
+            if (exchange.Costs.Count == 0)
             {
-                var costBehaviour = Instantiate(_costPrefab, _costParent);
-                costBehaviour.Setup(cost);
+                _separator.gameObject.SetActive(false);
+            }
+            else
+            {
+                _separator.gameObject.SetActive(true);
+
+                foreach (var cost in exchange.Costs)
+                {
+                    var costBehaviour = costsPool.Get();
+                    costBehaviour.Setup(cost);
+                }
             }
         }
-
+       
 
         EditorUtils.SetDirty(gameObject);
     }

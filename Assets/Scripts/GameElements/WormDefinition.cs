@@ -1,6 +1,6 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Worm", menuName = "ScriptableObjects/Resources/Worm")]
-public class WormDefinition : GameElementDefinition
+public class WormDefinition : BaseResourceDefinition
 {
 }

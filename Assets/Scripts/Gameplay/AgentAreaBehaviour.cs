@@ -4,13 +4,14 @@ using System.Linq;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 public class AgentAreaBehaviour : MonoBehaviour
 {
     [SerializeField] AgentAreaDefinition _definition;
-    [SerializeField] ExchangeBehaviour exchangePrefab;
+    [FormerlySerializedAs("exchangePrefab"), SerializeField] ExchangeBehaviour _exchangePrefab;
     [SerializeField] Transform _exchangesParent;
     [SerializeField] TextMeshProUGUI _name;
     [SerializeField] ImperialFlagBehaviour _imperialFlagBehaviour;
@@ -33,12 +34,15 @@ public class AgentAreaBehaviour : MonoBehaviour
     public void Setup()
     {
         _name.text = _definition.Name;
-        UnityUtils.HideAllChildren(_exchangesParent);
+        var exchangesPool = new PrefabsPool<ExchangeBehaviour>(_exchangePrefab, _exchangesParent, 10);
 
         var exchangeWithCost = _definition.Exchanges.FirstOrDefault(x => x.Costs.Count > 0);
+        bool differentCosts = _definition.Exchanges.Count > 1 && exchangeWithCost != null;
+
+
         if (exchangeWithCost != null)
         {
-            _cost.Setup(exchangeWithCost.Costs[0], _definition.Exchanges.Count > 1);
+            _cost.Setup(exchangeWithCost.Costs[0], differentCosts);
             _cost.gameObject.SetActive(true);
         }
         else
@@ -48,9 +52,11 @@ public class AgentAreaBehaviour : MonoBehaviour
 
         foreach (var exchange in _definition.Exchanges)
         {
-            var exchangeBehaviour = Instantiate(exchangePrefab, _exchangesParent);
-            exchangeBehaviour.Setup(exchange);
+            var exchangeBehaviour = exchangesPool.Get();
+            exchangeBehaviour.Setup(exchange, !differentCosts);
         }
+
+        _imperialFlagBehaviour.Setup(_definition.ImperialFlagReward);
 
         _agentIcon.sprite = _definition.AgentIcon.Icon;
         _agentIcon.color = _definition.AgentIcon.Color;

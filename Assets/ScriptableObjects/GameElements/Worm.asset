@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8055078811130946bfa7032d98b2d0f, type: 3}
   m_Name: Worm
   m_EditorClassIdentifier: 
-  _id: 8
-  Icon: {fileID: 21300000, guid: d99431bdd791f493fb1633a8eb4f9b5a, type: 3}
+  _id: 11
+  Icon: {fileID: 2865906195106238846, guid: c17e93a3f25c69b469526fbe89b2a267, type: 3}

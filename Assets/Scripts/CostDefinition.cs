@@ -16,7 +16,7 @@ public class CostDefinition
     public CostType CostType;
 
     [AllowNesting, ShowIf("CostType", CostType.Resource)] 
-    public GameElementDefinition Resource;
+    public BaseResourceDefinition Resource;
 
     public int Quantity;
 }

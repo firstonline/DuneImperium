@@ -15,7 +15,7 @@ public class RewardDefinition
     // Condition
     public RewardType RewardType;
     [AllowNesting, ShowIf("RewardType", RewardType.Resource)]
-    public GameElementDefinition Resource;
+    public BaseResourceDefinition Resource;
 
     public int Quantity;
 }

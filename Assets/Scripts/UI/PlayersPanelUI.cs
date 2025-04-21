@@ -19,11 +19,12 @@ public class PlayersPanelUI : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        _playerInfoPool = new(_playerInfoPrefab, this.transform, 10, _container);
+        _playerInfoPool = new(_playerInfoPrefab, this.transform, 10);
 
         for (int i = 0; i < 4; i++)
         {
             var playerInfoUI = _playerInfoPool.Get();
+            _container.Inject(playerInfoUI);
             playerInfoUI.Setup(i);
         }
     }
