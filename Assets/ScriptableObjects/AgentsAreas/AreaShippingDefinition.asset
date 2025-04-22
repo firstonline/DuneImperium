@@ -10,25 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
-  m_Name: AreaImperialBasinDefinition
+  m_Name: AreaShippingDefinition
   m_EditorClassIdentifier: 
-  _id: 4
-  Name: Imperial Basin
+  _id: 0
+  Name: Shipping
   AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
   Reveal:
     Action: {fileID: 0}
     Quantity: 0
   Exchanges:
   - Requirements: []
-    Costs: []
+    Costs:
+    - Action: {fileID: 11400000, guid: 4ed52b8b18609a34186879c9a0f06412, type: 2}
+      Quantity: 3
     Rewards:
-    - Action: {fileID: 11400000, guid: 9434dc0a093ac5641b836ebbc17b757e, type: 2}
+    - Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
+      Quantity: 5
+    - Action: {fileID: 11400000, guid: 4285de4df3b99ac45b3a7d83a5e0e8c5, type: 2}
       Quantity: 1
-  IsMakerBoard: 1
-  IsCombatArea: 1
+  IsMakerBoard: 0
+  IsCombatArea: 0
   ImperialFlagReward:
     Requirements: []
     Costs: []
-    Rewards:
-    - Action: {fileID: 11400000, guid: 9434dc0a093ac5641b836ebbc17b757e, type: 2}
-      Quantity: 1
+    Rewards: []
+  Requirement:
+    Action: {fileID: 11400000, guid: 6dfc02cde868e304d962d5b6a3771c38, type: 2}
+    Quantity: 2

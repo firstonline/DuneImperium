@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddTroop
   m_EditorClassIdentifier: 
   Type: 0
-  Icon: {fileID: 0}
+  Icon: {fileID: -6984463723642438207, guid: 2e35f9a9090ac1f429c6f35d117c7291, type: 3}
   Explanation: 

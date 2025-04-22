@@ -12,6 +12,7 @@ public class AgentAreaDefinition : ScriptableObject, IDatabaseItem
     public bool IsMakerBoard;
     public bool IsCombatArea;
     public ExchangeDefinition ImperialFlagReward;
+    public RequirementDefinition Requirement;
 
     public int ID { get { return _id; } set { _id = value; } }
 }

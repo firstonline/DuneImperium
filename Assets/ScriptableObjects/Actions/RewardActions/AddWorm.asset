@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddWorm
   m_EditorClassIdentifier: 
   Type: 11
-  Icon: {fileID: 0}
+  Icon: {fileID: 2865906195106238846, guid: c17e93a3f25c69b469526fbe89b2a267, type: 3}
   Explanation: 

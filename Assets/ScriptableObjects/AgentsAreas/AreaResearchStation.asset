@@ -10,25 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
-  m_Name: AreaImperialBasinDefinition
+  m_Name: AreaResearchStation
   m_EditorClassIdentifier: 
-  _id: 4
-  Name: Imperial Basin
-  AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
+  _id: 6
+  Name: ResearchStation
+  AgentIcon: {fileID: 11400000, guid: ae54809f3817ed04e9a46c74e953419a, type: 2}
   Reveal:
     Action: {fileID: 0}
     Quantity: 0
   Exchanges:
   - Requirements: []
-    Costs: []
+    Costs:
+    - Action: {fileID: 11400000, guid: 276cf1359ef6681429c9715af5333cff, type: 2}
+      Quantity: 2
     Rewards:
-    - Action: {fileID: 11400000, guid: 9434dc0a093ac5641b836ebbc17b757e, type: 2}
-      Quantity: 1
-  IsMakerBoard: 1
+    - Action: {fileID: 11400000, guid: 5c4cf0dd83b09dc48a8fce5e8ffe99c2, type: 2}
+      Quantity: 2
+    - Action: {fileID: 11400000, guid: 88e512a41e46a9c409a8bd84744337c7, type: 2}
+      Quantity: 2
+  IsMakerBoard: 0
   IsCombatArea: 1
   ImperialFlagReward:
     Requirements: []
     Costs: []
-    Rewards:
-    - Action: {fileID: 11400000, guid: 9434dc0a093ac5641b836ebbc17b757e, type: 2}
-      Quantity: 1
+    Rewards: []
+  Requirement:
+    Action: {fileID: 0}
+    Quantity: 0

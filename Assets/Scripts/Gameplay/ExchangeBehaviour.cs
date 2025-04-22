@@ -5,40 +5,40 @@ using UnityEngine;
 public class ExchangeBehaviour : MonoBehaviour
 {
     [SerializeField] Transform _rewardsParent;
+    [SerializeField] RewardBehaviour[] _rewards;
     [SerializeField] Transform _costParent;
-    [SerializeField] RewardBehaviour _rewardPrefab;
-    [SerializeField] CostBehaviour _costPrefab;
+    [SerializeField] CostBehaviour[] _costs;
     [SerializeField] GameObject _separator;
 
     public void Setup(ExchangeDefinition exchange, bool hideCost = false)
     {
-        var rewardsPool = new PrefabsPool<RewardBehaviour>(_rewardPrefab, _rewardsParent, 10);
-        var costsPool = new PrefabsPool<CostBehaviour>(_costPrefab, _costParent, 10);
+        UnityUtils.HideAllChildren(_rewardsParent);
+        UnityUtils.HideAllChildren(_costParent);
 
-        foreach (var reward in exchange.Rewards)
+        for (int i = 0; i < exchange.Rewards.Count; i++)
         {
-            var rewardBehaviour = rewardsPool.Get();
+            var reward = exchange.Rewards[i];
+            var rewardBehaviour = _rewards[i];
             rewardBehaviour.Setup(reward);
+            rewardBehaviour.gameObject.SetActive(true);
         }
-        if (hideCost)
+
+        if (hideCost || exchange.Costs.Count == 0)
         {
             _separator.gameObject.SetActive(false);
+            _costParent.gameObject.SetActive(false);
         }
         else
         {
-            if (exchange.Costs.Count == 0)
-            {
-                _separator.gameObject.SetActive(false);
-            }
-            else
-            {
-                _separator.gameObject.SetActive(true);
+            _separator.gameObject.SetActive(true);
+            _costParent.gameObject.SetActive(true);
 
-                foreach (var cost in exchange.Costs)
-                {
-                    var costBehaviour = costsPool.Get();
-                    costBehaviour.Setup(cost);
-                }
+            for (int i = 0; i < exchange.Costs.Count; i++)
+            {
+                var cost = exchange.Costs[i];
+                var costBehaviour = _costs[i];
+                costBehaviour.Setup(cost);
+                costBehaviour.gameObject.SetActive(true);
             }
         }
        

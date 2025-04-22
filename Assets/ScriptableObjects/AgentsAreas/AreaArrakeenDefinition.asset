@@ -31,4 +31,6 @@ MonoBehaviour:
   ImperialFlagReward:
     Requirements: []
     Costs: []
-    Rewards: []
+    Rewards:
+    - Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
+      Quantity: 1

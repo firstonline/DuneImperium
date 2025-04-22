@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BreakWall
   m_EditorClassIdentifier: 
   Type: 21
-  Icon: {fileID: 0}
+  Icon: {fileID: 4288754095808091271, guid: 1d12473ba49c80240bde02424d03a47b, type: 3}
   Explanation: 

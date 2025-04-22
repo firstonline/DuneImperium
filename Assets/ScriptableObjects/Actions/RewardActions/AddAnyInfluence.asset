@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddAnyInfluence
   m_EditorClassIdentifier: 
   Type: 19
-  Icon: {fileID: 0}
+  Icon: {fileID: -9029249506186567164, guid: 99cfccbfdb9311a4b8d3fd64a68d75bc, type: 3}
   Explanation: 

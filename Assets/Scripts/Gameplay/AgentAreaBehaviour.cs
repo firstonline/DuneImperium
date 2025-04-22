@@ -10,8 +10,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class AgentAreaBehaviour : MonoBehaviour
 {
+    [SerializeField] ExchangeBehaviour[] _exchanges;
     [SerializeField] AgentAreaDefinition _definition;
-    [FormerlySerializedAs("exchangePrefab"), SerializeField] ExchangeBehaviour _exchangePrefab;
     [SerializeField] Transform _exchangesParent;
     [SerializeField] TextMeshProUGUI _name;
     [SerializeField] ImperialFlagBehaviour _imperialFlagBehaviour;
@@ -34,15 +34,39 @@ public class AgentAreaBehaviour : MonoBehaviour
     public void Setup()
     {
         _name.text = _definition.Name;
-        var exchangesPool = new PrefabsPool<ExchangeBehaviour>(_exchangePrefab, _exchangesParent, 10);
+
+        int? cost = null;
 
         var exchangeWithCost = _definition.Exchanges.FirstOrDefault(x => x.Costs.Count > 0);
-        bool differentCosts = _definition.Exchanges.Count > 1 && exchangeWithCost != null;
+        bool sameCosts = true;
+
+        foreach ( var exchanges in _definition.Exchanges)
+        {
+            int currentCost = 0;
+            if (exchanges.Costs.Count == 0)
+            {
+                currentCost = 0;
+            }
+            else
+            {
+                currentCost = exchanges.Costs[0].Quantity;
+            }
+
+            if (cost == null)
+            {
+                cost = currentCost;
+            }
+            else if (cost != currentCost)
+            {
+                sameCosts = false;
+                break;
+            }
+        }
 
 
         if (exchangeWithCost != null)
         {
-            _cost.Setup(exchangeWithCost.Costs[0], differentCosts);
+            _cost.Setup(exchangeWithCost.Costs[0], !sameCosts);
             _cost.gameObject.SetActive(true);
         }
         else
@@ -50,10 +74,13 @@ public class AgentAreaBehaviour : MonoBehaviour
             _cost.gameObject.SetActive(false);
         }
 
-        foreach (var exchange in _definition.Exchanges)
+        UnityUtils.HideAllChildren(_exchangesParent);
+        for (int i = 0; i < _definition.Exchanges.Count; i++)
         {
-            var exchangeBehaviour = exchangesPool.Get();
-            exchangeBehaviour.Setup(exchange, !differentCosts);
+            var exchange = _definition.Exchanges[i];
+            var exchangeBehaviour = _exchanges[i];
+            exchangeBehaviour.Setup(exchange, sameCosts);
+            exchangeBehaviour.gameObject.SetActive(true);
         }
 
         _imperialFlagBehaviour.Setup(_definition.ImperialFlagReward);

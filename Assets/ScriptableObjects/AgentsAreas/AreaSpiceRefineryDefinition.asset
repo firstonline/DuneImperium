@@ -20,7 +20,9 @@ MonoBehaviour:
     Quantity: 0
   Exchanges:
   - Requirements: []
-    Costs: []
+    Costs:
+    - Action: {fileID: 11400000, guid: 4ed52b8b18609a34186879c9a0f06412, type: 2}
+      Quantity: 0
     Rewards:
     - Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
       Quantity: 2
@@ -37,5 +39,8 @@ MonoBehaviour:
     Requirements: []
     Costs: []
     Rewards:
-    - Action: {fileID: 0}
+    - Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
       Quantity: 1
+  Requirement:
+    Action: {fileID: 0}
+    Quantity: 0
