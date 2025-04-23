@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
+  m_Name: AreaSwordmaster
+  m_EditorClassIdentifier: 
+  _id: 15
+  Name: Gather Support
+  AgentIcon: {fileID: 11400000, guid: eda63889efe087e4b988a3279d2839be, type: 2}
+  Reveal:
+    HasCost: 0
+    CostActionDefinition: {fileID: 0}
+    CostQuantity: 0
+    HasRequirement: 0
+    Requirement: {fileID: 0}
+    RequirementQuantity: 0
+    Action: {fileID: 0}
+    Quantity: 0
+  Exchanges:
+  - Requirements: []
+    Costs:
+    - Action: {fileID: 11400000, guid: f303749ae43ae60439b8e4a4f9b75aea, type: 2}
+      Quantity: 6
+    Rewards:
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 6b30a56c464cb7b4db564ca8473fc1fe, type: 2}
+      Quantity: 1
+  IsMakerBoard: 0
+  IsCombatArea: 0
+  ImperialFlagReward:
+    Requirements: []
+    Costs: []
+    Rewards: []
+  Requirement:
+    Action: {fileID: 0}
+    Quantity: 0

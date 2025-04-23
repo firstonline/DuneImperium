@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
+  m_Name: AreaAssembleyHall
+  m_EditorClassIdentifier: 
+  _id: 2
+  Name: Sietch Tabr
+  AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
+  Reveal:
+    HasCost: 0
+    CostActionDefinition: {fileID: 0}
+    CostQuantity: 0
+    HasRequirement: 0
+    Requirement: {fileID: 0}
+    RequirementQuantity: 0
+    Action: {fileID: 0}
+    Quantity: 0
+  Exchanges:
+  - Requirements: []
+    Costs: []
+    Rewards:
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 0f30b995364beea4c9223f23b85c283c, type: 2}
+      Quantity: 1
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: a2f109fe8a56f27488b411f32cd24fda, type: 2}
+      Quantity: 1
+  IsMakerBoard: 0
+  IsCombatArea: 0
+  ImperialFlagReward:
+    Requirements: []
+    Costs: []
+    Rewards: []
+  Requirement:
+    Action: {fileID: 0}
+    Quantity: 0

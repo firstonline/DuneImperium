@@ -15,10 +15,8 @@ public class PlayersPanelUI : MonoBehaviour
 
     void Awake()
     {
-        foreach (Transform child in this.transform)
-        {
-            Destroy(child.gameObject);
-        }
+        UnityUtils.HideAllChildren(this.transform);
+
         _playerInfoPool = new(_playerInfoPrefab, this.transform, 10);
 
         for (int i = 0; i < 4; i++)

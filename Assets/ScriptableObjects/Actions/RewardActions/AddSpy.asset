@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddSpy
   m_EditorClassIdentifier: 
   Type: 22
-  Icon: {fileID: 0}
+  Icon: {fileID: -9148348609924905823, guid: 08d7bcfea1101784f90fdc4197ae37bd, type: 3}
   Explanation: 

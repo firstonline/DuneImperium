@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddCouncilSeat
   m_EditorClassIdentifier: 
   Type: 15
-  Icon: {fileID: 0}
+  Icon: {fileID: 4561218730917404705, guid: 92b3214dd7563324982a1543c511af6c, type: 3}
   Explanation: 

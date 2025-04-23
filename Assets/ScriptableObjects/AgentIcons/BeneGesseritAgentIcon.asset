@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c413405a5cf24d840bd1eb10631fc6b9, type: 3}
   m_Name: BeneGesseritAgentIcon
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  Color: {r: 0.8333516, g: 0, b: 1, a: 1}
+  Icon: {fileID: -3153888467009052503, guid: 513a0f6e08e8c7940a07b529d93d241d, type: 3}
+  Color: {r: 1, g: 1, b: 1, a: 1}

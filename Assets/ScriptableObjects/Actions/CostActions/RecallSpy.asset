@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RecallSpy
   m_EditorClassIdentifier: 
   Type: 17
-  Icon: {fileID: 0}
+  Icon: {fileID: 2601742672667555538, guid: a0591499aa5b42744b1e712e3cb6bb83, type: 3}
   Explanation: 

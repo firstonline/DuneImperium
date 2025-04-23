@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
+  m_Name: AreaImperialPrivelege
+  m_EditorClassIdentifier: 
+  _id: 9
+  Name: Imperial Privelege
+  AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
+  Reveal:
+    HasCost: 0
+    CostActionDefinition: {fileID: 0}
+    CostQuantity: 0
+    HasRequirement: 0
+    Requirement: {fileID: 0}
+    RequirementQuantity: 0
+    Action: {fileID: 0}
+    Quantity: 0
+  Exchanges:
+  - Requirements: []
+    Costs:
+    - Action: {fileID: 11400000, guid: f303749ae43ae60439b8e4a4f9b75aea, type: 2}
+      Quantity: 3
+    Rewards:
+    - HasCost: 0
+      CostActionDefinition: {fileID: 11400000, guid: ed700cd694c5b73469bdb9fbedde01cc, type: 2}
+      CostQuantity: 1
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 0f30b995364beea4c9223f23b85c283c, type: 2}
+      Quantity: 1
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 88e512a41e46a9c409a8bd84744337c7, type: 2}
+      Quantity: 1
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 01bbedbe94d9e144c9e36c5f92c9ecf8, type: 2}
+      Quantity: 1
+  IsMakerBoard: 0
+  IsCombatArea: 0
+  ImperialFlagReward:
+    Requirements: []
+    Costs: []
+    Rewards: []
+  Requirement:
+    Action: {fileID: 0}
+    Quantity: 0

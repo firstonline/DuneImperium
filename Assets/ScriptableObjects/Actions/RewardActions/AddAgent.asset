@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddAgent
   m_EditorClassIdentifier: 
   Type: 9
-  Icon: {fileID: 0}
+  Icon: {fileID: -5315616286039868874, guid: 4730087d558690f479e64c27a69a4400, type: 3}
   Explanation: 

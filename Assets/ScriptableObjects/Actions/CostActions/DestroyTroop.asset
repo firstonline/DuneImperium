@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DestroyTroop
   m_EditorClassIdentifier: 
   Type: 1
-  Icon: {fileID: 0}
+  Icon: {fileID: 7738890446035250635, guid: bbe43dc6bd25cf041a567ce4bf6d15a9, type: 3}
   Explanation: 

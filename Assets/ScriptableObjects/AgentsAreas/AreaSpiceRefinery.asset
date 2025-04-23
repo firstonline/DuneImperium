@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
-  m_Name: AreaSpiceRefineryDefinition
+  m_Name: AreaSpiceRefinery
   m_EditorClassIdentifier: 
-  _id: 6
+  _id: 14
   Name: Spice Refinery
   AgentIcon: {fileID: 11400000, guid: ae54809f3817ed04e9a46c74e953419a, type: 2}
   Reveal:
+    HasCost: 0
+    CostActionDefinition: {fileID: 0}
+    CostQuantity: 0
+    HasRequirement: 0
+    Requirement: {fileID: 0}
+    RequirementQuantity: 0
     Action: {fileID: 0}
     Quantity: 0
   Exchanges:
@@ -24,14 +30,26 @@ MonoBehaviour:
     - Action: {fileID: 11400000, guid: 4ed52b8b18609a34186879c9a0f06412, type: 2}
       Quantity: 0
     Rewards:
-    - Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
       Quantity: 2
   - Requirements: []
     Costs:
     - Action: {fileID: 11400000, guid: 4ed52b8b18609a34186879c9a0f06412, type: 2}
       Quantity: 1
     Rewards:
-    - Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
       Quantity: 4
   IsMakerBoard: 0
   IsCombatArea: 1
@@ -39,7 +57,13 @@ MonoBehaviour:
     Requirements: []
     Costs: []
     Rewards:
-    - Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
       Quantity: 1
   Requirement:
     Action: {fileID: 0}

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddEmperorInfluence
   m_EditorClassIdentifier: 
   Type: 7
-  Icon: {fileID: 0}
+  Icon: {fileID: 171427263289973471, guid: 51616c151dd569942ba4bf0ac631b5af, type: 3}
   Explanation: 

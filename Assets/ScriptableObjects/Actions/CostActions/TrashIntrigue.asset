@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TrashIntrigue
   m_EditorClassIdentifier: 
   Type: 16
-  Icon: {fileID: 0}
+  Icon: {fileID: 465734471567276261, guid: 843a88a81ff4d814a9cc923d427c8f4d, type: 3}
   Explanation: 

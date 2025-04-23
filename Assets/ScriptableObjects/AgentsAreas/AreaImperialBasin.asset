@@ -10,19 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
-  m_Name: AreaImperialBasinDefinition
+  m_Name: AreaImperialBasin
   m_EditorClassIdentifier: 
-  _id: 4
+  _id: 8
   Name: Imperial Basin
   AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
   Reveal:
+    HasCost: 0
+    CostActionDefinition: {fileID: 0}
+    CostQuantity: 0
+    HasRequirement: 0
+    Requirement: {fileID: 0}
+    RequirementQuantity: 0
     Action: {fileID: 0}
     Quantity: 0
   Exchanges:
   - Requirements: []
     Costs: []
     Rewards:
-    - Action: {fileID: 11400000, guid: 9434dc0a093ac5641b836ebbc17b757e, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 9434dc0a093ac5641b836ebbc17b757e, type: 2}
       Quantity: 1
   IsMakerBoard: 1
   IsCombatArea: 1
@@ -30,5 +42,14 @@ MonoBehaviour:
     Requirements: []
     Costs: []
     Rewards:
-    - Action: {fileID: 11400000, guid: 9434dc0a093ac5641b836ebbc17b757e, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 9434dc0a093ac5641b836ebbc17b757e, type: 2}
       Quantity: 1
+  Requirement:
+    Action: {fileID: 0}
+    Quantity: 0

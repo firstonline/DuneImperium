@@ -7,7 +7,6 @@ public class PrefabsPool<T> where T : UnityEngine.Object
 {
     T _prefab;
     Transform _parent;
-    int _capacity;
     List<T> _activeItems;
 
     ObjectPool<T> _pool;
@@ -16,7 +15,6 @@ public class PrefabsPool<T> where T : UnityEngine.Object
     {
         _prefab = prefab;
         _parent = parent;
-        _capacity = capacity;
 
         _activeItems = new();
 
@@ -59,7 +57,8 @@ public class PrefabsPool<T> where T : UnityEngine.Object
                         go.transform.SetParent(_parent);
                     }
                     _activeItems.Remove(objectToRelease);
-                }
+                }, 
+                defaultCapacity: capacity
             );
 
         var children = _parent.GetComponentsInChildren<T>(true);

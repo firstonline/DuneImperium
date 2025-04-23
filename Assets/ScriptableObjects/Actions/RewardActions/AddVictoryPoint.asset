@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddVictoryPoint
   m_EditorClassIdentifier: 
   Type: 8
-  Icon: {fileID: 0}
+  Icon: {fileID: 3708212905990077974, guid: a32d0f164e46fdc44951ab8920070d11, type: 3}
   Explanation: 

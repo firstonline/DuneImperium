@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RetreatTroop
   m_EditorClassIdentifier: 
   Type: 0
-  Icon: {fileID: 0}
+  Icon: {fileID: -856674490436894943, guid: ef4a23260fbd131489c7a7aa7cc29938, type: 3}
   Explanation: 

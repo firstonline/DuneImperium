@@ -26,4 +26,6 @@ public enum RewardActionTypes
     BreakWall = 21,
     AddSpy = 22,
     AddMakerHook = 23,
+    StealIntrigue = 24,
+    TrashCard = 25,
 }

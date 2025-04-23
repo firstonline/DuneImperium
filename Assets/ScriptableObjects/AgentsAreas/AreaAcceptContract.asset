@@ -16,15 +16,33 @@ MonoBehaviour:
   Name: Accept Contract
   AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
   Reveal:
+    HasCost: 0
+    CostActionDefinition: {fileID: 0}
+    CostQuantity: 0
+    HasRequirement: 0
+    Requirement: {fileID: 0}
+    RequirementQuantity: 0
     Action: {fileID: 0}
     Quantity: 0
   Exchanges:
   - Requirements: []
     Costs: []
     Rewards:
-    - Action: {fileID: 11400000, guid: 33e14b4d95ea2584797587f91bdd60f0, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 33e14b4d95ea2584797587f91bdd60f0, type: 2}
       Quantity: 1
-    - Action: {fileID: 11400000, guid: 88e512a41e46a9c409a8bd84744337c7, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 88e512a41e46a9c409a8bd84744337c7, type: 2}
       Quantity: 1
   IsMakerBoard: 0
   IsCombatArea: 0
@@ -32,3 +50,6 @@ MonoBehaviour:
     Requirements: []
     Costs: []
     Rewards: []
+  Requirement:
+    Action: {fileID: 0}
+    Quantity: 0

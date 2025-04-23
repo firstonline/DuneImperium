@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddPersuation
   m_EditorClassIdentifier: 
   Type: 12
-  Icon: {fileID: 0}
+  Icon: {fileID: 5503624299109491918, guid: 61eb67a85c54e024cba0d6d8a6c06fc5, type: 3}
   Explanation: 

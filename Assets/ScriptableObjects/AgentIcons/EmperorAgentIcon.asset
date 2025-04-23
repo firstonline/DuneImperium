@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c413405a5cf24d840bd1eb10631fc6b9, type: 3}
   m_Name: EmperorAgentIcon
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  Color: {r: 0.4415095, g: 0.4415095, b: 0.4415095, a: 1}
+  Icon: {fileID: 207941326178686059, guid: 14a0eddc28b72754cb65cb24d941d8b8, type: 3}
+  Color: {r: 1, g: 1, b: 1, a: 1}

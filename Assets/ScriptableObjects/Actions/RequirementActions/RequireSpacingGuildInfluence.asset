@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RequireSpacingGuildInfluence
   m_EditorClassIdentifier: 
   Type: 2
-  Icon: {fileID: 0}
+  Icon: {fileID: -1926136313824699056, guid: 788d7d53c0261db459a18908baa448df, type: 3}
   Explanation: 

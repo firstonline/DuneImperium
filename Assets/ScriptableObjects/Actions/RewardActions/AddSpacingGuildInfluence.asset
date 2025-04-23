@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddSpacingGuildInfluence
   m_EditorClassIdentifier: 
   Type: 6
-  Icon: {fileID: 0}
+  Icon: {fileID: -7626696212897151614, guid: 12d557809e028724c9ca303627c8072c, type: 3}
   Explanation: 

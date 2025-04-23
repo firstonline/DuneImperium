@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DiscardCard
   m_EditorClassIdentifier: 
   Type: 15
-  Icon: {fileID: 0}
+  Icon: {fileID: -3818801587210754203, guid: 958ba3d947ec9d74ca8ef789726e3da0, type: 3}
   Explanation: 

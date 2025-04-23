@@ -9,10 +9,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public enum ItemType
+{
+    Water = 0,
+    Solari = 1,
+    Spice = 2,
+}
 
 public struct PlayerData : INetworkSerializable
 {
-    public Dictionary<int, int> Items;
+    public Dictionary<ItemType, int> Inventory;
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
@@ -22,9 +28,9 @@ public struct PlayerData : INetworkSerializable
 
         if (serializer.IsWriter)
         {
-            keys = Items.Keys.ToArray();
-            values = Items.Values.ToArray();
-            length = Items.Count;
+            keys = Inventory.Keys.Select(x => (int)x).ToArray();
+            values = Inventory.Values.ToArray();
+            length = Inventory.Count;
         }
         else
         {
@@ -38,10 +44,10 @@ public struct PlayerData : INetworkSerializable
 
         if (serializer.IsReader)
         {
-            Items = new Dictionary<int, int>();
+            Inventory = new Dictionary<ItemType, int>();
             for (int i = 0; i < length; i++)
             {
-                Items.Add(keys[i], values[i]);
+                Inventory.Add((ItemType)keys[i], values[i]);
             }
         }
     }
@@ -94,7 +100,7 @@ public class NetworkGameplayService : NetworkBehaviour
         if (x.Players == null || x.Players.Count < clientId)
         {
             var playerData = new PlayerData();
-            playerData.Items = new Dictionary<int, int>();
+            playerData.Inventory = GenerateInventory();
             return playerData;
         }
         else
@@ -121,7 +127,7 @@ public class NetworkGameplayService : NetworkBehaviour
             for (int i = 0; i < 4; i++)
             {
                 var playerData = new PlayerData();
-                playerData.Items = new Dictionary<int, int>();
+                playerData.Inventory = GenerateInventory();
                 gameData.Players.Add(playerData);
             }
 
@@ -152,6 +158,17 @@ public class NetworkGameplayService : NetworkBehaviour
         {
             _networkVariable.Value = gameData;
         }
+    }
+
+    Dictionary<ItemType, int> GenerateInventory()
+    {
+        var inventory = new Dictionary<ItemType, int>();
+        var itemTypes = Enum.GetValues(typeof(ItemType));
+        foreach (var itemType in itemTypes)
+        {
+            inventory.Add((ItemType)itemType, 0);
+        }
+        return inventory;
     }
 
     void OnClientDisconnected(ulong clientID)

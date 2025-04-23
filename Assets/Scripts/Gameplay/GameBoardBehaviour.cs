@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UniDi;
 using UniRx;
 using UnityEngine;
@@ -9,11 +10,11 @@ public class GameBoard : MonoBehaviour
 
     CompositeDisposable _disposables = new();
 
-    AgentAreaBehaviour[] _agentAreas;
+    List<AgentAreaBehaviour> _agentAreas;
 
     void Awake()
     {
-        _agentAreas = gameObject.GetComponentsInChildren<AgentAreaBehaviour>();
+        _agentAreas = FindObjectsByType<AgentAreaBehaviour>(FindObjectsSortMode.None).ToList();
 
         foreach (var agentArea in _agentAreas)
         {
@@ -28,6 +29,6 @@ public class GameBoard : MonoBehaviour
 
     void OnAreaClicked(AgentAreaDefinition definition)
     {
-        _areaService.VisitAgentArea(definition.ID, definition.Exchanges.Count - 1);
+        _areaService.VisitAgentArea(definition.ID, 0);
     }
 }

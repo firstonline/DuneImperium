@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AddBenneGesseritInfluence
   m_EditorClassIdentifier: 
   Type: 5
-  Icon: {fileID: 0}
+  Icon: {fileID: -6851589078136821089, guid: 38c726c4bbbf4dd439c163cb0512a846, type: 3}
   Explanation: 

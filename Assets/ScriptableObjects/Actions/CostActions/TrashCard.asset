@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TrashCard
   m_EditorClassIdentifier: 
   Type: 14
-  Icon: {fileID: 0}
+  Icon: {fileID: -6997690638324009433, guid: 99a5d0b1f21bee8429c1ccb82cdd2bd3, type: 3}
   Explanation: 

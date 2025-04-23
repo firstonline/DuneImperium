@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c413405a5cf24d840bd1eb10631fc6b9, type: 3}
   m_Name: FremenAgentIcon
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  Color: {r: 0, g: 0.76287055, b: 1, a: 1}
+  Icon: {fileID: -4444121438635299464, guid: cb445ce396b21a344823b5ebe3f3ed74, type: 3}
+  Color: {r: 1, g: 1, b: 1, a: 1}

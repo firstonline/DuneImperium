@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
-  m_Name: AreaShippingDefinition
+  m_Name: AreaShipping
   m_EditorClassIdentifier: 
-  _id: 0
+  _id: 12
   Name: Shipping
   AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
   Reveal:
+    HasCost: 0
+    CostActionDefinition: {fileID: 0}
+    CostQuantity: 0
+    HasRequirement: 0
+    Requirement: {fileID: 0}
+    RequirementQuantity: 0
     Action: {fileID: 0}
     Quantity: 0
   Exchanges:
@@ -24,9 +30,21 @@ MonoBehaviour:
     - Action: {fileID: 11400000, guid: 4ed52b8b18609a34186879c9a0f06412, type: 2}
       Quantity: 3
     Rewards:
-    - Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 5948c049700b7644ea4e7d7e7b318501, type: 2}
       Quantity: 5
-    - Action: {fileID: 11400000, guid: 4285de4df3b99ac45b3a7d83a5e0e8c5, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 4285de4df3b99ac45b3a7d83a5e0e8c5, type: 2}
       Quantity: 1
   IsMakerBoard: 0
   IsCombatArea: 0

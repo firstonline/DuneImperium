@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2748911ea1edc574c857c52a8631a11b, type: 3}
   m_Name: AreaResearchStation
   m_EditorClassIdentifier: 
-  _id: 6
+  _id: 10
   Name: ResearchStation
   AgentIcon: {fileID: 11400000, guid: ae54809f3817ed04e9a46c74e953419a, type: 2}
   Reveal:
+    HasCost: 0
+    CostActionDefinition: {fileID: 0}
+    CostQuantity: 0
+    HasRequirement: 0
+    Requirement: {fileID: 0}
+    RequirementQuantity: 0
     Action: {fileID: 0}
     Quantity: 0
   Exchanges:
@@ -24,9 +30,21 @@ MonoBehaviour:
     - Action: {fileID: 11400000, guid: 276cf1359ef6681429c9715af5333cff, type: 2}
       Quantity: 2
     Rewards:
-    - Action: {fileID: 11400000, guid: 5c4cf0dd83b09dc48a8fce5e8ffe99c2, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 5c4cf0dd83b09dc48a8fce5e8ffe99c2, type: 2}
       Quantity: 2
-    - Action: {fileID: 11400000, guid: 88e512a41e46a9c409a8bd84744337c7, type: 2}
+    - HasCost: 0
+      CostActionDefinition: {fileID: 0}
+      CostQuantity: 0
+      HasRequirement: 0
+      Requirement: {fileID: 0}
+      RequirementQuantity: 0
+      Action: {fileID: 11400000, guid: 88e512a41e46a9c409a8bd84744337c7, type: 2}
       Quantity: 2
   IsMakerBoard: 0
   IsCombatArea: 1

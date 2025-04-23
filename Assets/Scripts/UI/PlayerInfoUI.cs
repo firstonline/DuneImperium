@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using TMPro;
 using UniDi;
 using UniRx;
 using UnityEngine;
@@ -8,7 +9,10 @@ public class PlayerInfoUI : MonoBehaviour
 {
     [Inject] NetworkGameplayService networkGameplayService;
 
-    [SerializeField] BasicResourceUI _basicResourcePrefab;
+    [SerializeField] TextMeshProUGUI _water;
+    [SerializeField] TextMeshProUGUI _solari;
+    [SerializeField] TextMeshProUGUI _spice;
+
     CompositeDisposable _disposables = new();
 
     void Awake()
@@ -17,18 +21,24 @@ public class PlayerInfoUI : MonoBehaviour
 
     void OnDestroy()
     {
+        Debug.Log($"Destroyed{_playerIndex}");
+
         _disposables.Clear();
     }
 
     public void Setup(int playerIndex)
     {
+        Debug.Log($"Creating{playerIndex}");
         _disposables.Clear();
-
+        _playerIndex = playerIndex;
         networkGameplayService.ObservePlayerData(playerIndex).Subscribe(Setup).AddTo(_disposables);
     }
 
+    int _playerIndex;
     void Setup(PlayerData playerData)
     {
-        
+        _water.text = playerData.Inventory[ItemType.Water].ToString();
+        _solari.text = playerData.Inventory[ItemType.Solari].ToString();
+        _spice.text = playerData.Inventory[ItemType.Spice].ToString();
     }
 }
