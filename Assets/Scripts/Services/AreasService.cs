@@ -1,4 +1,5 @@
-﻿using UniDi;
+﻿using System.Linq;
+using UniDi;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -26,8 +27,9 @@ public class AreasService : NetworkBehaviour
         {
             var exchange = agentArea.Exchanges[selectedExchange];
             bool canPay = CanPay(playerData, exchange);
+            bool canGainRewards = exchange.Rewards.Any(reward => CheckRequirement(playerData, reward.Requirement));
 
-            if (canPay)
+            if (canPay && canGainRewards)
             {
                 PayCost(ref playerData, exchange);
                 ReceiveRewards(ref playerData, exchange);
@@ -37,7 +39,7 @@ public class AreasService : NetworkBehaviour
                 _networkGameplayService.UpdateGameData(gameData);
             }
 
-            VisitAgentAreaResponseClientRpc(canPay, rpcParams.Receive.SenderClientId);
+            VisitAgentAreaResponseClientRpc(canPay && canGainRewards, rpcParams.Receive.SenderClientId);
         }
         else
         {
@@ -132,19 +134,19 @@ public class AreasService : NetworkBehaviour
                     break;
 
                 case RewardActionTypes.AddFremenInfluence:
-                    playerData.Resoureces[ResourceType.FremenInfluence] += reward.Quantity;
+                    playerData.Resoureces[ResourceType.FremenInfluence] = Mathf.Min(playerData.Resoureces[ResourceType.FremenInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
                     break;
 
                 case RewardActionTypes.AddBenneGesseritInfluence:
-                    playerData.Resoureces[ResourceType.BeneGesseritInfluence] += reward.Quantity;
+                    playerData.Resoureces[ResourceType.BeneGesseritInfluence] = Mathf.Min(playerData.Resoureces[ResourceType.BeneGesseritInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
                     break;
 
                 case RewardActionTypes.AddSpacingGuildInfluence:
-                    playerData.Resoureces[ResourceType.SpacingGuildInfluence] += reward.Quantity;
+                    playerData.Resoureces[ResourceType.SpacingGuildInfluence] = Mathf.Min(playerData.Resoureces[ResourceType.SpacingGuildInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
                     break;
 
                 case RewardActionTypes.AddEmperorInfluence:
-                    playerData.Resoureces[ResourceType.EmperorInfluence] += reward.Quantity;
+                    playerData.Resoureces[ResourceType.EmperorInfluence] = Mathf.Min(playerData.Resoureces[ResourceType.EmperorInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
                     break;
 
                 case RewardActionTypes.AddVictoryPoints:
@@ -194,6 +196,7 @@ public class AreasService : NetworkBehaviour
                     break;
 
                 case RewardActionTypes.AddMakerHook:
+                    playerData.Resoureces[ResourceType.MakerHook] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.StealIntrigue:
@@ -224,7 +227,7 @@ public class AreasService : NetworkBehaviour
             RequirementActionTypes.RequireBenneGesseritCardInPlay => false,
             RequirementActionTypes.RequireSpacingGuildCardInPlay => false,
             RequirementActionTypes.RequireEmperorCardInPlay => false,
-            RequirementActionTypes.RequireMakerHook => false,
+            RequirementActionTypes.RequireMakerHook => playerData.Resoureces[ResourceType.MakerHook] >= requirement.Quantity,
         };
         return meetsRequirement;
     }

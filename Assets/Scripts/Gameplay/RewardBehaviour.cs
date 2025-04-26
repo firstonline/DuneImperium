@@ -7,6 +7,8 @@ public class RewardBehaviour : MonoBehaviour
 {
     [SerializeField] Image _icon;
     [SerializeField] TextMeshProUGUI _quantity;
+    [SerializeField] RequirementBehaviour requirementBehaviour;
+
     public void Setup(RewardDefinition reward)
     {
         _icon.sprite = reward.Action.Icon;
@@ -22,7 +24,16 @@ public class RewardBehaviour : MonoBehaviour
             _quantity.text = reward.Quantity.ToString();
         }
 
-      
+        if (reward.HasRequirement)
+        {
+            requirementBehaviour.Setup(reward.Requirement);
+            requirementBehaviour.gameObject.SetActive(true);
+        }
+        else
+        {
+            requirementBehaviour.gameObject.SetActive(false);
+        }
+
         EditorUtils.SetDirty(_quantity);
         EditorUtils.SetDirty(_icon);
     }

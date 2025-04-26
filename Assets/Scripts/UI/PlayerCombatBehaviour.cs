@@ -13,6 +13,7 @@ public class PlayerCombatBehaviour : MonoBehaviour
     [SerializeField] Image _playerIcon;
     [SerializeField] GameObject[] _deployedTroops;
     [SerializeField] GameObject[] _worms;
+    [SerializeField] GameObject _makerHook;
     [SerializeField] TextMeshProUGUI _garrisonedTroopsText;
     [SerializeField] TextMeshProUGUI _combatStrengthText;
 
@@ -36,6 +37,8 @@ public class PlayerCombatBehaviour : MonoBehaviour
             {
                 _worms[i].SetActive(true);
             }
+
+            _makerHook.gameObject.SetActive(x.Resoureces[ResourceType.MakerHook] > 0);
         }).AddTo(_disposables);
     }
 

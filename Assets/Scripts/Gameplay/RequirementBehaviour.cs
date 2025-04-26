@@ -10,7 +10,7 @@ public class RequirementBehaviour : MonoBehaviour
     public void Setup(RequirementDefinition requirement)
     {
         _icon.sprite = requirement.Action.Icon;
-        _quantity.text = requirement.Quantity > 0 ? requirement.Quantity.ToString() : "";
+        _quantity.text = requirement.Quantity > 1 ? requirement.Quantity.ToString() : "";
 
         EditorUtils.SetDirty(_icon);
         EditorUtils.SetDirty(_quantity);

@@ -19,11 +19,13 @@ public enum ResourceType
     FremenInfluence = 4,
     SpacingGuildInfluence = 5,
     EmperorInfluence = 6,
+    MakerHook = 7
 }
 
 public struct PlayerData : INetworkSerializable
 {
     public static readonly int MAX_TROOPS = 12;
+    public static readonly int MAX_INFLUENCE = 6;
 
     public int GarrisonedTroopsCount;
     public int DeployedTroopsCount;
