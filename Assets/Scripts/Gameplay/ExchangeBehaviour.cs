@@ -10,7 +10,7 @@ public class ExchangeBehaviour : MonoBehaviour
     [SerializeField] CostBehaviour[] _costs;
     [SerializeField] GameObject _separator;
 
-    public void Setup(ExchangeDefinition exchange, bool hideCost = false)
+    public void Setup(ExchangeDefinition exchange, bool hideCost = false, bool showInfluence = true)
     {
         UnityUtils.HideAllChildren(_rewardsParent);
         UnityUtils.HideAllChildren(_costParent);
@@ -18,6 +18,14 @@ public class ExchangeBehaviour : MonoBehaviour
         for (int i = 0; i < exchange.Rewards.Count; i++)
         {
             var reward = exchange.Rewards[i];
+            if (!showInfluence && 
+                (reward.Action.Type == RewardActionTypes.AddBenneGesseritInfluence
+                    || reward.Action.Type == RewardActionTypes.AddFremenInfluence
+                    || reward.Action.Type == RewardActionTypes.AddSpacingGuildInfluence
+                    || reward.Action.Type == RewardActionTypes.AddEmperorInfluence))
+            {
+                continue;
+            }    
             var rewardBehaviour = _rewards[i];
             rewardBehaviour.Setup(reward);
             rewardBehaviour.gameObject.SetActive(true);

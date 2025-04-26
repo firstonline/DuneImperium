@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: AreaHighliner
   m_EditorClassIdentifier: 
   _id: 7
-  Name: Sietch Tabr
+  Name: Highliner
   AgentIcon: {fileID: 11400000, guid: 189fcea96de8ba94fa60b7d069b1e5fb, type: 2}
   Reveal:
     HasCost: 0
-    CostActionDefinition: {fileID: 0}
-    CostQuantity: 0
+    CostActionDefinition:
+      Action: {fileID: 0}
+      Quantity: 0
     HasRequirement: 0
-    Requirement: {fileID: 0}
-    RequirementQuantity: 0
+    Requirement:
+      Action: {fileID: 0}
+      Quantity: 0
     Action: {fileID: 0}
     Quantity: 0
   Exchanges:
@@ -31,13 +33,25 @@ MonoBehaviour:
       Quantity: 5
     Rewards:
     - HasCost: 0
-      CostActionDefinition: {fileID: 0}
-      CostQuantity: 0
+      CostActionDefinition:
+        Action: {fileID: 0}
+        Quantity: 0
       HasRequirement: 0
-      Requirement: {fileID: 0}
-      RequirementQuantity: 0
+      Requirement:
+        Action: {fileID: 0}
+        Quantity: 0
       Action: {fileID: 11400000, guid: 5c4cf0dd83b09dc48a8fce5e8ffe99c2, type: 2}
       Quantity: 5
+    - HasCost: 0
+      CostActionDefinition:
+        Action: {fileID: 0}
+        Quantity: 0
+      HasRequirement: 0
+      Requirement:
+        Action: {fileID: 0}
+        Quantity: 0
+      Action: {fileID: 11400000, guid: b5b800444c2cb0740bdbc8dfd3782f10, type: 2}
+      Quantity: 1
   IsMakerBoard: 0
   IsCombatArea: 1
   ImperialFlagReward:

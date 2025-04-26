@@ -82,5 +82,5 @@ MonoBehaviour:
     Costs: []
     Rewards: []
   Requirement:
-    Action: {fileID: 0}
-    Quantity: 0
+    Action: {fileID: 11400000, guid: 1dc0d0c47a39ae64480c4df352c95a31, type: 2}
+    Quantity: 2

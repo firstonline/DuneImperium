@@ -37,8 +37,8 @@ public class PlayerInfoUI : MonoBehaviour
     int _playerIndex;
     void Setup(PlayerData playerData)
     {
-        _water.text = playerData.Inventory[ItemType.Water].ToString();
-        _solari.text = playerData.Inventory[ItemType.Solari].ToString();
-        _spice.text = playerData.Inventory[ItemType.Spice].ToString();
+        _water.text = playerData.Resoureces[ResourceType.Water].ToString();
+        _solari.text = playerData.Resoureces[ResourceType.Solari].ToString();
+        _spice.text = playerData.Resoureces[ResourceType.Spice].ToString();
     }
 }

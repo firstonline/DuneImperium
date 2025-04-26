@@ -1,7 +1,5 @@
-﻿using System;
-using UniDi;
+﻿using UniDi;
 using Unity.Netcode;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class AreasService : NetworkBehaviour
@@ -21,15 +19,15 @@ public class AreasService : NetworkBehaviour
         var clientId = (ulong)rpcParams.Receive.SenderClientId;
 
 
-        if (CanVisitArea(clientId, agentArea, selectedExchange))
+        var gameData = _networkGameplayService.GameData;
+        var playerData = gameData.Players[(int)clientId];
+
+        if (CanVisitArea(playerData, agentArea))
         {
-            bool canPay = true;
-
-            var gameData = _networkGameplayService.GameData;
-            var playerData = gameData.Players[(int)clientId];
             var exchange = agentArea.Exchanges[selectedExchange];
+            bool canPay = CanPay(playerData, exchange);
 
-            if (CanPay(playerData, exchange))
+            if (canPay)
             {
                 PayCost(ref playerData, exchange);
                 ReceiveRewards(ref playerData, exchange);
@@ -66,9 +64,9 @@ public class AreasService : NetworkBehaviour
             {
                 CostActionTypes.RetreatTroop => false,
                 CostActionTypes.DestroyTroop => false,
-                CostActionTypes.RemoveSpice => playerData.Inventory[ItemType.Spice] >= cost.Quantity,
-                CostActionTypes.RemoveWater => playerData.Inventory[ItemType.Water] >= cost.Quantity,
-                CostActionTypes.RemoveSolari => playerData.Inventory[ItemType.Solari] >= cost.Quantity,
+                CostActionTypes.RemoveSpice => playerData.Resoureces[ResourceType.Spice] >= cost.Quantity,
+                CostActionTypes.RemoveWater => playerData.Resoureces[ResourceType.Water] >= cost.Quantity,
+                CostActionTypes.RemoveSolari => playerData.Resoureces[ResourceType.Solari] >= cost.Quantity,
                 CostActionTypes.RemoveFremenInfluence => false,
                 CostActionTypes.RemoveBenneGesseritInfluence => false,
                 CostActionTypes.RemoveSpacingGuildInfluence => false,
@@ -95,9 +93,9 @@ public class AreasService : NetworkBehaviour
             {
                 case CostActionTypes.RetreatTroop: break;
                 case CostActionTypes.DestroyTroop: break;
-                case CostActionTypes.RemoveSpice: playerData.Inventory[ItemType.Spice] -= cost.Quantity; break;
-                case CostActionTypes.RemoveWater: playerData.Inventory[ItemType.Water] -= cost.Quantity; break;
-                case CostActionTypes.RemoveSolari: playerData.Inventory[ItemType.Solari] -= cost.Quantity; break;
+                case CostActionTypes.RemoveSpice: playerData.Resoureces[ResourceType.Spice] -= cost.Quantity; break;
+                case CostActionTypes.RemoveWater: playerData.Resoureces[ResourceType.Water] -= cost.Quantity; break;
+                case CostActionTypes.RemoveSolari: playerData.Resoureces[ResourceType.Solari] -= cost.Quantity; break;
                 case CostActionTypes.RemoveFremenInfluence: break;
                 case CostActionTypes.RemoveBenneGesseritInfluence: break;
                 case CostActionTypes.RemoveSpacingGuildInfluence: break;
@@ -118,30 +116,35 @@ public class AreasService : NetworkBehaviour
             switch (reward.Action.Type)
             {
                 case RewardActionTypes.AddTroop:
+                    playerData.GarrisonedTroopsCount = Mathf.Min(playerData.GarrisonedTroopsCount + reward.Quantity, PlayerData.MAX_TROOPS - playerData.DeployedTroopsCount);
                     break;
 
                 case RewardActionTypes.AddSpice:
-                    playerData.Inventory[ItemType.Spice] += reward.Quantity;
+                    playerData.Resoureces[ResourceType.Spice] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddWater:
-                    playerData.Inventory[ItemType.Water] += reward.Quantity;
+                    playerData.Resoureces[ResourceType.Water] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddSolari:
-                    playerData.Inventory[ItemType.Solari] += reward.Quantity;
+                    playerData.Resoureces[ResourceType.Solari] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddFremenInfluence:
+                    playerData.Resoureces[ResourceType.FremenInfluence] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddBenneGesseritInfluence:
+                    playerData.Resoureces[ResourceType.BeneGesseritInfluence] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddSpacingGuildInfluence:
+                    playerData.Resoureces[ResourceType.SpacingGuildInfluence] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddEmperorInfluence:
+                    playerData.Resoureces[ResourceType.EmperorInfluence] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddVictoryPoints:
@@ -154,6 +157,7 @@ public class AreasService : NetworkBehaviour
                     break;
 
                 case RewardActionTypes.AddWorm:
+                    playerData.WormsCount = playerData.WormsCount + reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddPersuation:
@@ -201,56 +205,35 @@ public class AreasService : NetworkBehaviour
         }
     }
 
-    //void CheckRequirement()
-    //{
-    //    switch (requirement)
-    //    {
-    //        case RequirementActionTypes.RequireFrementInfluence:
-    //            break;
+    bool CheckRequirement(PlayerData playerData, RequirementDefinition requirement)
+    {
+        if (requirement.Quantity == 0)
+            return true;
 
-    //        case RequirementActionTypes.RequireBeneGesseritInfluence:
-    //            break;
+        bool meetsRequirement = requirement.Action.Type switch
+        {
+            RequirementActionTypes.RequireFrementInfluence => playerData.Resoureces[ResourceType.FremenInfluence] >= requirement.Quantity,
+            RequirementActionTypes.RequireBeneGesseritInfluence => playerData.Resoureces[ResourceType.BeneGesseritInfluence] >= requirement.Quantity,
+            RequirementActionTypes.RequireSpacingGuildInfluence => playerData.Resoureces[ResourceType.SpacingGuildInfluence] >= requirement.Quantity,
+            RequirementActionTypes.RequireEmperorInfluence => playerData.Resoureces[ResourceType.EmperorInfluence] >= requirement.Quantity,
+            RequirementActionTypes.RequireFremenAlliance => false,
+            RequirementActionTypes.RequireBeneGesseritAlliance => false,
+            RequirementActionTypes.RequireSpacingGuildAlliance => false,
+            RequirementActionTypes.RequireEmperorAlliance => false,
+            RequirementActionTypes.RequireFremenCardInPlay => false,
+            RequirementActionTypes.RequireBenneGesseritCardInPlay => false,
+            RequirementActionTypes.RequireSpacingGuildCardInPlay => false,
+            RequirementActionTypes.RequireEmperorCardInPlay => false,
+            RequirementActionTypes.RequireMakerHook => false,
+        };
+        return meetsRequirement;
+    }
 
-    //        case RequirementActionTypes.RequireSpacingGuildInfluence:
-    //            break;
-
-    //        case RequirementActionTypes.RequireEmperorInfluence:
-    //            break;
-
-    //        case RequirementActionTypes.RequireFremenAlliance:
-    //            break;
-
-    //        case RequirementActionTypes.RequireBeneGesseritAlliance:
-    //            break;
-
-    //        case RequirementActionTypes.RequireSpacingGuildAlliance:
-    //            break;
-
-    //        case RequirementActionTypes.RequireEmperorAlliance:
-    //            break;
-
-    //        case RequirementActionTypes.RequireFremenCardInPlay:
-    //            break;
-
-    //        case RequirementActionTypes.RequireBenneGesseritCardInPlay:
-    //            break;
-
-    //        case RequirementActionTypes.RequireSpacingGuildCardInPlay:
-    //            break;
-
-    //        case RequirementActionTypes.RequireEmperorCardInPlay:
-    //            break;
-
-    //        case RequirementActionTypes.RequireMakerHook:
-    //            break;
-    //    }
-    //}
-
-    bool CanVisitArea(ulong clientId, AgentAreaDefinition agentArea, int selectedExchange)
+    bool CanVisitArea(PlayerData playerData, AgentAreaDefinition agentArea)
     {
         if (!agentArea)
             return false;
 
-        return true;
+        return CheckRequirement(playerData, agentArea.Requirement);
     }
 }

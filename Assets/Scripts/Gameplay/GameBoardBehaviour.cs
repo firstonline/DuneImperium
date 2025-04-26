@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UniDi;
@@ -7,6 +8,7 @@ using UnityEngine;
 public class GameBoard : MonoBehaviour
 {
     [Inject] AreasService _areaService;
+    [SerializeField] SelectExchangePopup _selectExchangePopup;
 
     CompositeDisposable _disposables = new();
 
@@ -14,6 +16,8 @@ public class GameBoard : MonoBehaviour
 
     void Awake()
     {
+        _selectExchangePopup.gameObject.SetActive(false);
+
         _agentAreas = FindObjectsByType<AgentAreaBehaviour>(FindObjectsSortMode.None).ToList();
 
         foreach (var agentArea in _agentAreas)
@@ -29,6 +33,18 @@ public class GameBoard : MonoBehaviour
 
     void OnAreaClicked(AgentAreaDefinition definition)
     {
-        _areaService.VisitAgentArea(definition.ID, 0);
+        if(definition.Exchanges.Count > 1)
+        {
+            _selectExchangePopup.Show((index) =>
+            {
+                _areaService.VisitAgentArea(definition.ID, index);
+
+            });
+        }
+        else
+        {
+            _areaService.VisitAgentArea(definition.ID, 0);
+        }
+       
     }
 }

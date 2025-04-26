@@ -18,6 +18,7 @@ public class AgentAreaBehaviour : MonoBehaviour
     [SerializeField] Image _agentIcon;
     [SerializeField] Image _combatIcon;
     [SerializeField] CostBehaviour _cost;
+    [SerializeField] RequirementBehaviour _requirement;
 
     Button _button;
 
@@ -74,14 +75,25 @@ public class AgentAreaBehaviour : MonoBehaviour
             _cost.gameObject.SetActive(false);
         }
 
+        if (_definition.Requirement.Quantity > 0)
+        {
+            _requirement.gameObject.SetActive(true);
+            _requirement.Setup(_definition.Requirement);
+        }
+        else
+        {
+            _requirement.gameObject.SetActive(false);
+        }
+
         UnityUtils.HideAllChildren(_exchangesParent);
         for (int i = 0; i < _definition.Exchanges.Count; i++)
         {
             var exchange = _definition.Exchanges[i];
             var exchangeBehaviour = _exchanges[i];
-            exchangeBehaviour.Setup(exchange, sameCosts);
+            exchangeBehaviour.Setup(exchange, sameCosts, false);
             exchangeBehaviour.gameObject.SetActive(true);
         }
+
 
         _imperialFlagBehaviour.Setup(_definition.ImperialFlagReward);
 

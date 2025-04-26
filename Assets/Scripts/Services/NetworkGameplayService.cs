@@ -9,28 +9,44 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum ItemType
+
+public enum ResourceType
 {
     Water = 0,
     Solari = 1,
     Spice = 2,
+    BeneGesseritInfluence = 3,
+    FremenInfluence = 4,
+    SpacingGuildInfluence = 5,
+    EmperorInfluence = 6,
 }
 
 public struct PlayerData : INetworkSerializable
 {
-    public Dictionary<ItemType, int> Inventory;
+    public static readonly int MAX_TROOPS = 12;
+
+    public int GarrisonedTroopsCount;
+    public int DeployedTroopsCount;
+    public int WormsCount;
+    public int CombatStrength => WormsCount * 3 + DeployedTroopsCount * 2;
+
+    public Dictionary<ResourceType, int> Resoureces;
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
+        serializer.SerializeValue(ref GarrisonedTroopsCount);
+        serializer.SerializeValue(ref DeployedTroopsCount);
+        serializer.SerializeValue(ref WormsCount);
+
         int length = 0;
         int[] keys;
         int[] values;
 
         if (serializer.IsWriter)
         {
-            keys = Inventory.Keys.Select(x => (int)x).ToArray();
-            values = Inventory.Values.ToArray();
-            length = Inventory.Count;
+            keys = Resoureces.Keys.Select(x => (int)x).ToArray();
+            values = Resoureces.Values.ToArray();
+            length = Resoureces.Count;
         }
         else
         {
@@ -44,10 +60,10 @@ public struct PlayerData : INetworkSerializable
 
         if (serializer.IsReader)
         {
-            Inventory = new Dictionary<ItemType, int>();
+            Resoureces = new Dictionary<ResourceType, int>();
             for (int i = 0; i < length; i++)
             {
-                Inventory.Add((ItemType)keys[i], values[i]);
+                Resoureces.Add((ResourceType)keys[i], values[i]);
             }
         }
     }
@@ -100,7 +116,7 @@ public class NetworkGameplayService : NetworkBehaviour
         if (x.Players == null || x.Players.Count < clientId)
         {
             var playerData = new PlayerData();
-            playerData.Inventory = GenerateInventory();
+            playerData.Resoureces = GenerateInventory();
             return playerData;
         }
         else
@@ -127,7 +143,7 @@ public class NetworkGameplayService : NetworkBehaviour
             for (int i = 0; i < 4; i++)
             {
                 var playerData = new PlayerData();
-                playerData.Inventory = GenerateInventory();
+                playerData.Resoureces = GenerateInventory();
                 gameData.Players.Add(playerData);
             }
 
@@ -160,13 +176,13 @@ public class NetworkGameplayService : NetworkBehaviour
         }
     }
 
-    Dictionary<ItemType, int> GenerateInventory()
+    Dictionary<ResourceType, int> GenerateInventory()
     {
-        var inventory = new Dictionary<ItemType, int>();
-        var itemTypes = Enum.GetValues(typeof(ItemType));
+        var inventory = new Dictionary<ResourceType, int>();
+        var itemTypes = Enum.GetValues(typeof(ResourceType));
         foreach (var itemType in itemTypes)
         {
-            inventory.Add((ItemType)itemType, 0);
+            inventory.Add((ResourceType)itemType, 0);
         }
         return inventory;
     }

@@ -17,11 +17,13 @@ MonoBehaviour:
   AgentIcon: {fileID: 11400000, guid: b462683160d35514887852a08f60a8c2, type: 2}
   Reveal:
     HasCost: 0
-    CostActionDefinition: {fileID: 0}
-    CostQuantity: 0
+    CostActionDefinition:
+      Action: {fileID: 0}
+      Quantity: 0
     HasRequirement: 0
-    Requirement: {fileID: 0}
-    RequirementQuantity: 0
+    Requirement:
+      Action: {fileID: 0}
+      Quantity: 0
     Action: {fileID: 0}
     Quantity: 0
   Exchanges:
@@ -31,20 +33,34 @@ MonoBehaviour:
       Quantity: 1
     Rewards:
     - HasCost: 0
-      CostActionDefinition: {fileID: 0}
-      CostQuantity: 0
+      CostActionDefinition:
+        Action: {fileID: 0}
+        Quantity: 0
       HasRequirement: 0
-      Requirement: {fileID: 0}
-      RequirementQuantity: 0
+      Requirement:
+        Action: {fileID: 0}
+        Quantity: 0
       Action: {fileID: 11400000, guid: 88e512a41e46a9c409a8bd84744337c7, type: 2}
       Quantity: 1
     - HasCost: 0
-      CostActionDefinition: {fileID: 0}
-      CostQuantity: 0
+      CostActionDefinition:
+        Action: {fileID: 0}
+        Quantity: 0
       HasRequirement: 0
-      Requirement: {fileID: 0}
-      RequirementQuantity: 0
+      Requirement:
+        Action: {fileID: 0}
+        Quantity: 0
       Action: {fileID: 11400000, guid: c55442bf7bbac5849829ba8cd202ea84, type: 2}
+      Quantity: 1
+    - HasCost: 0
+      CostActionDefinition:
+        Action: {fileID: 0}
+        Quantity: 0
+      HasRequirement: 0
+      Requirement:
+        Action: {fileID: 0}
+        Quantity: 0
+      Action: {fileID: 11400000, guid: e13ed2c9491798e45bc10682aeeeb917, type: 2}
       Quantity: 1
   IsMakerBoard: 0
   IsCombatArea: 0

@@ -7,12 +7,10 @@ using UnityEngine;
 public class RewardDefinition
 {
     public bool HasCost; 
-    [AllowNesting, ShowIf("HasCost")] public CostActionDefinition CostActionDefinition;
-    [AllowNesting, ShowIf("HasCost")] public int CostQuantity;
+    [AllowNesting, ShowIf("HasCost")] public CostDefinition CostActionDefinition;
 
     public bool HasRequirement;
-    [AllowNesting, ShowIf("HasRequirement")] public RequirementActionDefinition Requirement;
-    [AllowNesting, ShowIf("HasRequirement")] public int RequirementQuantity;
+    [AllowNesting, ShowIf("HasRequirement")] public RequirementDefinition Requirement;
 
     public RewardActionDefinition Action;
     public int Quantity;
