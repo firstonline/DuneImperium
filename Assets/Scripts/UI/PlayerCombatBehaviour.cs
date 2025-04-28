@@ -38,7 +38,7 @@ public class PlayerCombatBehaviour : MonoBehaviour
                 _worms[i].SetActive(true);
             }
 
-            _makerHook.gameObject.SetActive(x.Resoureces[ResourceType.MakerHook] > 0);
+            _makerHook.gameObject.SetActive(x.Resources[ResourceType.MakerHook] > 0);
         }).AddTo(_disposables);
     }
 

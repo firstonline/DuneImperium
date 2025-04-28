@@ -11,7 +11,7 @@ public enum RewardActionTypes
     AddSpacingGuildInfluence = 6,
     AddEmperorInfluence = 7,
     AddVictoryPoints = 8,
-    AddAgent = 9,
+    AddSwordsman = 9,
     RecallAgent = 10,
     AddWorm = 11,
     AddPersuation = 12,

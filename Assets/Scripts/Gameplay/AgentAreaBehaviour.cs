@@ -10,6 +10,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class AgentAreaBehaviour : MonoBehaviour
 {
+    [SerializeField] bool _showBothPrices;
     [SerializeField] ExchangeBehaviour[] _exchanges;
     [SerializeField] AgentAreaDefinition _definition;
     [SerializeField] Transform _exchangesParent;
@@ -18,6 +19,7 @@ public class AgentAreaBehaviour : MonoBehaviour
     [SerializeField] Image _agentIcon;
     [SerializeField] Image _combatIcon;
     [SerializeField] CostBehaviour _cost;
+    [SerializeField] CostBehaviour _altCost;
     [SerializeField] RequirementBehaviour _requirement;
 
     Button _button;
@@ -64,10 +66,9 @@ public class AgentAreaBehaviour : MonoBehaviour
             }
         }
 
-
         if (exchangeWithCost != null)
         {
-            _cost.Setup(exchangeWithCost.Costs[0], !sameCosts);
+            _cost.Setup(exchangeWithCost.Costs[0], !sameCosts && !_showBothPrices);
             _cost.gameObject.SetActive(true);
         }
         else
@@ -85,14 +86,36 @@ public class AgentAreaBehaviour : MonoBehaviour
             _requirement.gameObject.SetActive(false);
         }
 
-        UnityUtils.HideAllChildren(_exchangesParent);
-        for (int i = 0; i < _definition.Exchanges.Count; i++)
+        if (_showBothPrices && _definition.Exchanges.Count > 0)
         {
-            var exchange = _definition.Exchanges[i];
-            var exchangeBehaviour = _exchanges[i];
-            exchangeBehaviour.Setup(exchange, sameCosts, false);
+            _altCost.Setup(_definition.Exchanges[1].Costs[0]);
+            _altCost.gameObject.SetActive(true);
+        }
+        else
+        {
+            _altCost.gameObject.SetActive(false);
+        }
+
+        UnityUtils.HideAllChildren(_exchangesParent);
+
+        if (_showBothPrices)
+        {
+            var exchange = _definition.Exchanges[0];
+            var exchangeBehaviour = _exchanges[0];
+            exchangeBehaviour.Setup(exchange, true, false);
             exchangeBehaviour.gameObject.SetActive(true);
         }
+        else
+        {
+            for (int i = 0; i < _definition.Exchanges.Count; i++)
+            {
+                var exchange = _definition.Exchanges[i];
+                var exchangeBehaviour = _exchanges[i];
+                exchangeBehaviour.Setup(exchange, sameCosts, false);
+                exchangeBehaviour.gameObject.SetActive(true);
+            }
+        }
+       
 
 
         _imperialFlagBehaviour.Setup(_definition.ImperialFlagReward);

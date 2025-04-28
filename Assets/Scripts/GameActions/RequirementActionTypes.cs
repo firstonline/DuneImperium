@@ -15,4 +15,6 @@ public enum RequirementActionTypes
     RequireSpacingGuildCardInPlay = 10,
     RequireEmperorCardInPlay = 11,
     RequireMakerHook = 12,
+    RequireNoSwordsman = 13,
+    RequireSwordsman = 14,
 }

@@ -26,10 +26,11 @@ public class AreasService : NetworkBehaviour
         if (CanVisitArea(playerData, agentArea))
         {
             var exchange = agentArea.Exchanges[selectedExchange];
+            bool allowedToBuy = exchange.Requirements.All(x => CheckRequirement(playerData, x));
             bool canPay = CanPay(playerData, exchange);
-            bool canGainRewards = exchange.Rewards.Any(reward => CheckRequirement(playerData, reward.Requirement));
+            bool canGainRewards = exchange.Rewards.Any(reward => !reward.HasRequirement || CheckRequirement(playerData, reward.Requirement));
 
-            if (canPay && canGainRewards)
+            if (allowedToBuy && canPay && canGainRewards)
             {
                 PayCost(ref playerData, exchange);
                 ReceiveRewards(ref playerData, exchange);
@@ -37,9 +38,12 @@ public class AreasService : NetworkBehaviour
                 gameData.Players[(int)clientId] = playerData;
                 gameData.RandomData = gameData.RandomData + 1; // this enforce network variable change
                 _networkGameplayService.UpdateGameData(gameData);
+                VisitAgentAreaResponseClientRpc(true, rpcParams.Receive.SenderClientId);
             }
-
-            VisitAgentAreaResponseClientRpc(canPay && canGainRewards, rpcParams.Receive.SenderClientId);
+            else
+            {
+                VisitAgentAreaResponseClientRpc(false, rpcParams.Receive.SenderClientId);
+            }
         }
         else
         {
@@ -66,9 +70,9 @@ public class AreasService : NetworkBehaviour
             {
                 CostActionTypes.RetreatTroop => false,
                 CostActionTypes.DestroyTroop => false,
-                CostActionTypes.RemoveSpice => playerData.Resoureces[ResourceType.Spice] >= cost.Quantity,
-                CostActionTypes.RemoveWater => playerData.Resoureces[ResourceType.Water] >= cost.Quantity,
-                CostActionTypes.RemoveSolari => playerData.Resoureces[ResourceType.Solari] >= cost.Quantity,
+                CostActionTypes.RemoveSpice => playerData.Resources[ResourceType.Spice] >= cost.Quantity,
+                CostActionTypes.RemoveWater => playerData.Resources[ResourceType.Water] >= cost.Quantity,
+                CostActionTypes.RemoveSolari => playerData.Resources[ResourceType.Solari] >= cost.Quantity,
                 CostActionTypes.RemoveFremenInfluence => false,
                 CostActionTypes.RemoveBenneGesseritInfluence => false,
                 CostActionTypes.RemoveSpacingGuildInfluence => false,
@@ -95,9 +99,9 @@ public class AreasService : NetworkBehaviour
             {
                 case CostActionTypes.RetreatTroop: break;
                 case CostActionTypes.DestroyTroop: break;
-                case CostActionTypes.RemoveSpice: playerData.Resoureces[ResourceType.Spice] -= cost.Quantity; break;
-                case CostActionTypes.RemoveWater: playerData.Resoureces[ResourceType.Water] -= cost.Quantity; break;
-                case CostActionTypes.RemoveSolari: playerData.Resoureces[ResourceType.Solari] -= cost.Quantity; break;
+                case CostActionTypes.RemoveSpice: playerData.Resources[ResourceType.Spice] -= cost.Quantity; break;
+                case CostActionTypes.RemoveWater: playerData.Resources[ResourceType.Water] -= cost.Quantity; break;
+                case CostActionTypes.RemoveSolari: playerData.Resources[ResourceType.Solari] -= cost.Quantity; break;
                 case CostActionTypes.RemoveFremenInfluence: break;
                 case CostActionTypes.RemoveBenneGesseritInfluence: break;
                 case CostActionTypes.RemoveSpacingGuildInfluence: break;
@@ -122,37 +126,39 @@ public class AreasService : NetworkBehaviour
                     break;
 
                 case RewardActionTypes.AddSpice:
-                    playerData.Resoureces[ResourceType.Spice] += reward.Quantity;
+                    playerData.Resources[ResourceType.Spice] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddWater:
-                    playerData.Resoureces[ResourceType.Water] += reward.Quantity;
+                    playerData.Resources[ResourceType.Water] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddSolari:
-                    playerData.Resoureces[ResourceType.Solari] += reward.Quantity;
+                    playerData.Resources[ResourceType.Solari] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.AddFremenInfluence:
-                    playerData.Resoureces[ResourceType.FremenInfluence] = Mathf.Min(playerData.Resoureces[ResourceType.FremenInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
+                    playerData.Resources[ResourceType.FremenInfluence] = Mathf.Min(playerData.Resources[ResourceType.FremenInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
                     break;
 
                 case RewardActionTypes.AddBenneGesseritInfluence:
-                    playerData.Resoureces[ResourceType.BeneGesseritInfluence] = Mathf.Min(playerData.Resoureces[ResourceType.BeneGesseritInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
+                    playerData.Resources[ResourceType.BeneGesseritInfluence] = Mathf.Min(playerData.Resources[ResourceType.BeneGesseritInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
                     break;
 
                 case RewardActionTypes.AddSpacingGuildInfluence:
-                    playerData.Resoureces[ResourceType.SpacingGuildInfluence] = Mathf.Min(playerData.Resoureces[ResourceType.SpacingGuildInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
+                    playerData.Resources[ResourceType.SpacingGuildInfluence] = Mathf.Min(playerData.Resources[ResourceType.SpacingGuildInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
                     break;
 
                 case RewardActionTypes.AddEmperorInfluence:
-                    playerData.Resoureces[ResourceType.EmperorInfluence] = Mathf.Min(playerData.Resoureces[ResourceType.EmperorInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
+                    playerData.Resources[ResourceType.EmperorInfluence] = Mathf.Min(playerData.Resources[ResourceType.EmperorInfluence] + reward.Quantity, PlayerData.MAX_INFLUENCE);
                     break;
 
                 case RewardActionTypes.AddVictoryPoints:
                     break;
 
-                case RewardActionTypes.AddAgent:
+                case RewardActionTypes.AddSwordsman:
+                    playerData.HaveSwordsman = true;
+                    playerData.AgentsCount++;
                     break;
 
                 case RewardActionTypes.RecallAgent:
@@ -196,7 +202,7 @@ public class AreasService : NetworkBehaviour
                     break;
 
                 case RewardActionTypes.AddMakerHook:
-                    playerData.Resoureces[ResourceType.MakerHook] += reward.Quantity;
+                    playerData.Resources[ResourceType.MakerHook] += reward.Quantity;
                     break;
 
                 case RewardActionTypes.StealIntrigue:
@@ -215,10 +221,10 @@ public class AreasService : NetworkBehaviour
 
         bool meetsRequirement = requirement.Action.Type switch
         {
-            RequirementActionTypes.RequireFrementInfluence => playerData.Resoureces[ResourceType.FremenInfluence] >= requirement.Quantity,
-            RequirementActionTypes.RequireBeneGesseritInfluence => playerData.Resoureces[ResourceType.BeneGesseritInfluence] >= requirement.Quantity,
-            RequirementActionTypes.RequireSpacingGuildInfluence => playerData.Resoureces[ResourceType.SpacingGuildInfluence] >= requirement.Quantity,
-            RequirementActionTypes.RequireEmperorInfluence => playerData.Resoureces[ResourceType.EmperorInfluence] >= requirement.Quantity,
+            RequirementActionTypes.RequireFrementInfluence => playerData.Resources[ResourceType.FremenInfluence] >= requirement.Quantity,
+            RequirementActionTypes.RequireBeneGesseritInfluence => playerData.Resources[ResourceType.BeneGesseritInfluence] >= requirement.Quantity,
+            RequirementActionTypes.RequireSpacingGuildInfluence => playerData.Resources[ResourceType.SpacingGuildInfluence] >= requirement.Quantity,
+            RequirementActionTypes.RequireEmperorInfluence => playerData.Resources[ResourceType.EmperorInfluence] >= requirement.Quantity,
             RequirementActionTypes.RequireFremenAlliance => false,
             RequirementActionTypes.RequireBeneGesseritAlliance => false,
             RequirementActionTypes.RequireSpacingGuildAlliance => false,
@@ -227,7 +233,9 @@ public class AreasService : NetworkBehaviour
             RequirementActionTypes.RequireBenneGesseritCardInPlay => false,
             RequirementActionTypes.RequireSpacingGuildCardInPlay => false,
             RequirementActionTypes.RequireEmperorCardInPlay => false,
-            RequirementActionTypes.RequireMakerHook => playerData.Resoureces[ResourceType.MakerHook] >= requirement.Quantity,
+            RequirementActionTypes.RequireMakerHook => playerData.Resources[ResourceType.MakerHook] >= requirement.Quantity,
+            RequirementActionTypes.RequireSwordsman => !playerData.HaveSwordsman && _networkGameplayService.GameData.Players.Any(x => x.HaveSwordsman),
+            RequirementActionTypes.RequireNoSwordsman => _networkGameplayService.GameData.Players.All(x => !x.HaveSwordsman),
         };
         return meetsRequirement;
     }

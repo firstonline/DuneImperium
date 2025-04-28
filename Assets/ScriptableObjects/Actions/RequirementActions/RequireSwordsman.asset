@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8da41bbad6b9d4fb7c7532605b226d, type: 3}
-  m_Name: AddAgent
+  m_Script: {fileID: 11500000, guid: 657dd4dbee3003c438a479b3da8788e4, type: 3}
+  m_Name: RequireSwordsman
   m_EditorClassIdentifier: 
-  Type: 9
-  Icon: {fileID: -5315616286039868874, guid: 4730087d558690f479e64c27a69a4400, type: 3}
+  Type: 14
+  Icon: {fileID: 4895802684607180572, guid: 2c693be7b86275c41a299bef93af434b, type: 3}
   Explanation: 

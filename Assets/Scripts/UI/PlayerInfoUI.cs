@@ -12,6 +12,7 @@ public class PlayerInfoUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI _water;
     [SerializeField] TextMeshProUGUI _solari;
     [SerializeField] TextMeshProUGUI _spice;
+    [SerializeField] TextMeshProUGUI _availableAgents;
 
     CompositeDisposable _disposables = new();
 
@@ -21,8 +22,6 @@ public class PlayerInfoUI : MonoBehaviour
 
     void OnDestroy()
     {
-        Debug.Log($"Destroyed{_playerIndex}");
-
         _disposables.Clear();
     }
 
@@ -37,8 +36,9 @@ public class PlayerInfoUI : MonoBehaviour
     int _playerIndex;
     void Setup(PlayerData playerData)
     {
-        _water.text = playerData.Resoureces[ResourceType.Water].ToString();
-        _solari.text = playerData.Resoureces[ResourceType.Solari].ToString();
-        _spice.text = playerData.Resoureces[ResourceType.Spice].ToString();
+        _water.text = playerData.Resources[ResourceType.Water].ToString();
+        _solari.text = playerData.Resources[ResourceType.Solari].ToString();
+        _spice.text = playerData.Resources[ResourceType.Spice].ToString();
+        _availableAgents.text = (playerData.AgentsCount - playerData.DeployedAgentsCount).ToString();
     }
 }

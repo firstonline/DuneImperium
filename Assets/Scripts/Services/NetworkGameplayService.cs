@@ -27,15 +27,21 @@ public struct PlayerData : INetworkSerializable
     public static readonly int MAX_TROOPS = 12;
     public static readonly int MAX_INFLUENCE = 6;
 
+    public bool HaveSwordsman;
+    public int AgentsCount;
+    public int DeployedAgentsCount;
     public int GarrisonedTroopsCount;
     public int DeployedTroopsCount;
     public int WormsCount;
     public int CombatStrength => WormsCount * 3 + DeployedTroopsCount * 2;
 
-    public Dictionary<ResourceType, int> Resoureces;
+    public Dictionary<ResourceType, int> Resources;
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
+        serializer.SerializeValue(ref HaveSwordsman);
+        serializer.SerializeValue(ref AgentsCount);
+        serializer.SerializeValue(ref DeployedAgentsCount);
         serializer.SerializeValue(ref GarrisonedTroopsCount);
         serializer.SerializeValue(ref DeployedTroopsCount);
         serializer.SerializeValue(ref WormsCount);
@@ -46,9 +52,9 @@ public struct PlayerData : INetworkSerializable
 
         if (serializer.IsWriter)
         {
-            keys = Resoureces.Keys.Select(x => (int)x).ToArray();
-            values = Resoureces.Values.ToArray();
-            length = Resoureces.Count;
+            keys = Resources.Keys.Select(x => (int)x).ToArray();
+            values = Resources.Values.ToArray();
+            length = Resources.Count;
         }
         else
         {
@@ -62,10 +68,10 @@ public struct PlayerData : INetworkSerializable
 
         if (serializer.IsReader)
         {
-            Resoureces = new Dictionary<ResourceType, int>();
+            Resources = new Dictionary<ResourceType, int>();
             for (int i = 0; i < length; i++)
             {
-                Resoureces.Add((ResourceType)keys[i], values[i]);
+                Resources.Add((ResourceType)keys[i], values[i]);
             }
         }
     }
@@ -118,7 +124,9 @@ public class NetworkGameplayService : NetworkBehaviour
         if (x.Players == null || x.Players.Count < clientId)
         {
             var playerData = new PlayerData();
-            playerData.Resoureces = GenerateInventory();
+            playerData.Resources = GenerateInventory();
+            playerData.AgentsCount = 2;
+            playerData.Resources[ResourceType.Water]++;
             return playerData;
         }
         else
@@ -145,12 +153,18 @@ public class NetworkGameplayService : NetworkBehaviour
             for (int i = 0; i < 4; i++)
             {
                 var playerData = new PlayerData();
-                playerData.Resoureces = GenerateInventory();
+                playerData.Resources = GenerateInventory();
+                playerData.AgentsCount = 2;
+                playerData.Resources[ResourceType.Water]++;
                 gameData.Players.Add(playerData);
             }
 
             _networkVariable.Value = gameData;
             _gameData.OnNext(gameData);
+        }
+        else
+        {
+            _gameData.OnNext(_networkVariable.Value);
         }
 
         _networkVariable.OnValueChanged += (oldData, newData) => 

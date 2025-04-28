@@ -18,22 +18,7 @@ public class HouseBehaviour : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            int index = i;
-
-            _gameplayService.ObservePlayerData(index)
-                .Skip(1)
-                .Select(x => x.Resoureces[_influence])
-                .DistinctUntilChanged()
-                .Subscribe(x =>
-                {
-                    var currentPosition = _players[index].transform.position;
-                    currentPosition.y = _influenceSteps[x].transform.position.y;
-                    _players[index].transform.position = currentPosition;
-                })
-                .AddTo(_disposables);
-        }
+        Invoke("Setup", 0.1f);
     }
 
     void OnDestroy()
@@ -41,16 +26,24 @@ public class HouseBehaviour : MonoBehaviour
         _disposables.Clear();
     }
 
-    public int testLadder = 0;
-
-    [Button]
-    public void Testing()
+    public void Setup()
     {
+        Debug.Log($"====Setting up player influcences {_influence.ToString()}");
         for (int i = 0; i < 4; i++)
         {
-            var currentPosition = _players[i].transform.position;
-            currentPosition.y = _influenceSteps[testLadder].transform.position.y;
-            _players[i].transform.position = currentPosition;
+            int index = i;
+
+            _gameplayService.ObservePlayerData(index)
+                .Select(x => x.Resources[_influence])
+                .DistinctUntilChanged()
+                .Subscribe(x =>
+                {
+                    var currentPosition = _players[index].transform.position;
+                    currentPosition.y = _influenceSteps[x].transform.position.y;
+                    _players[index].transform.position = currentPosition;
+                    Debug.Log($"Setting up player influcence {index} {x}");
+                })
+                .AddTo(_disposables);
         }
     }
 }
