@@ -9,46 +9,61 @@ public class ExchangeBehaviour : MonoBehaviour
     [SerializeField] Transform _costParent;
     [SerializeField] CostBehaviour[] _costs;
     [SerializeField] GameObject _separator;
+    [SerializeField] CouncilSeatBehaviour _councilSeatBehaviour;
 
     public void Setup(ExchangeDefinition exchange, bool hideCost = false, bool showInfluence = true)
     {
         UnityUtils.HideAllChildren(_rewardsParent);
         UnityUtils.HideAllChildren(_costParent);
 
-        for (int i = 0; i < exchange.Rewards.Count; i++)
+        if (exchange.Rewards[0].Action.Type == RewardActionTypes.AddCouncilSeat)
         {
-            var reward = exchange.Rewards[i];
-            if (!showInfluence && 
-                (reward.Action.Type == RewardActionTypes.AddBenneGesseritInfluence
-                    || reward.Action.Type == RewardActionTypes.AddFremenInfluence
-                    || reward.Action.Type == RewardActionTypes.AddSpacingGuildInfluence
-                    || reward.Action.Type == RewardActionTypes.AddEmperorInfluence))
-            {
-                continue;
-            }    
-            var rewardBehaviour = _rewards[i];
-            rewardBehaviour.Setup(reward);
-            rewardBehaviour.gameObject.SetActive(true);
-        }
-
-        if (hideCost || exchange.Costs.Count == 0)
-        {
-            _separator.gameObject.SetActive(false);
+            _councilSeatBehaviour.gameObject.SetActive(true);
             _costParent.gameObject.SetActive(false);
+            _rewardsParent.gameObject.SetActive(false);
         }
         else
         {
-            _separator.gameObject.SetActive(true);
-            _costParent.gameObject.SetActive(true);
+            _councilSeatBehaviour.gameObject.SetActive(false);
+            _rewardsParent.gameObject.SetActive(true);
 
-            for (int i = 0; i < exchange.Costs.Count; i++)
+
+            for (int i = 0; i < exchange.Rewards.Count; i++)
             {
-                var cost = exchange.Costs[i];
-                var costBehaviour = _costs[i];
-                costBehaviour.Setup(cost);
-                costBehaviour.gameObject.SetActive(true);
+                var reward = exchange.Rewards[i];
+                if (!showInfluence &&
+                    (reward.Action.Type == RewardActionTypes.AddBenneGesseritInfluence
+                        || reward.Action.Type == RewardActionTypes.AddFremenInfluence
+                        || reward.Action.Type == RewardActionTypes.AddSpacingGuildInfluence
+                        || reward.Action.Type == RewardActionTypes.AddEmperorInfluence))
+                {
+                    continue;
+                }
+                var rewardBehaviour = _rewards[i];
+                rewardBehaviour.Setup(reward);
+                rewardBehaviour.gameObject.SetActive(true);
+            }
+
+            if (hideCost || exchange.Costs.Count == 0)
+            {
+                _separator.gameObject.SetActive(false);
+                _costParent.gameObject.SetActive(false);
+            }
+            else
+            {
+                _separator.gameObject.SetActive(true);
+                _costParent.gameObject.SetActive(true);
+
+                for (int i = 0; i < exchange.Costs.Count; i++)
+                {
+                    var cost = exchange.Costs[i];
+                    var costBehaviour = _costs[i];
+                    costBehaviour.Setup(cost);
+                    costBehaviour.gameObject.SetActive(true);
+                }
             }
         }
+        
        
 
         EditorUtils.SetDirty(gameObject);

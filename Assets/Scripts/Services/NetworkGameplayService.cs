@@ -27,6 +27,10 @@ public struct PlayerData : INetworkSerializable
     public static readonly int MAX_TROOPS = 12;
     public static readonly int MAX_INFLUENCE = 6;
 
+    public bool IsTaken;
+    public ulong ClientId;
+
+    public bool HasCouncilSeat;
     public bool HaveSwordsman;
     public int AgentsCount;
     public int DeployedAgentsCount;
@@ -39,6 +43,8 @@ public struct PlayerData : INetworkSerializable
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
+        serializer.SerializeValue(ref IsTaken);
+        serializer.SerializeValue(ref HasCouncilSeat);
         serializer.SerializeValue(ref HaveSwordsman);
         serializer.SerializeValue(ref AgentsCount);
         serializer.SerializeValue(ref DeployedAgentsCount);
@@ -119,9 +125,9 @@ public class NetworkGameplayService : NetworkBehaviour
     BehaviorSubject<GameData> _gameData = new BehaviorSubject<GameData>(new GameData());
 
     public GameData GameData => _gameData.Value;
-    public IObservable<PlayerData> ObservePlayerData(int clientId) => _gameData.Select(x =>
+    public IObservable<PlayerData> ObservePlayerData(int index) => _gameData.Select(x =>
     {
-        if (x.Players == null || x.Players.Count < clientId)
+        if (x.Players == null || x.Players.Count < index)
         {
             var playerData = new PlayerData();
             playerData.Resources = GenerateInventory();
@@ -131,7 +137,7 @@ public class NetworkGameplayService : NetworkBehaviour
         }
         else
         {
-            return x.Players[clientId];
+            return x.Players[index];
         }
     });
 
@@ -156,11 +162,17 @@ public class NetworkGameplayService : NetworkBehaviour
                 playerData.Resources = GenerateInventory();
                 playerData.AgentsCount = 2;
                 playerData.Resources[ResourceType.Water]++;
+                if (i == 0)
+                {
+                    playerData.IsTaken = true;
+                }
+
                 gameData.Players.Add(playerData);
             }
 
             _networkVariable.Value = gameData;
             _gameData.OnNext(gameData);
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         }
         else
         {
@@ -172,6 +184,7 @@ public class NetworkGameplayService : NetworkBehaviour
             _gameData.OnNext(newData);
         };
 
+
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
     }
 
@@ -181,6 +194,7 @@ public class NetworkGameplayService : NetworkBehaviour
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
         }
     }
 
@@ -203,8 +217,31 @@ public class NetworkGameplayService : NetworkBehaviour
         return inventory;
     }
 
+    void OnClientConnected(ulong clientID)
+    {
+        Debug.Log($"Client Connected {clientID}");
+        var gameData = _networkVariable.Value;
+
+        for (int i = 0; i < gameData.Players.Count; i++)
+        {
+            var player = gameData.Players[i];
+            if (!player.IsTaken)
+            {
+                player.IsTaken = true;
+                player.ClientId = clientID;
+                gameData.Players[i] = player;
+                gameData.RandomData++;
+                _networkVariable.Value = gameData;
+                Debug.Log($"Assigning client {player.ClientId} to {i}");
+                break;
+            }
+        }
+    }
+
     void OnClientDisconnected(ulong clientID)
     {
+        Debug.Log($"Client Disconnected {clientID}");
+
         if (clientID == NetworkManager.Singleton.LocalClientId)
         {
             if (!NetworkManager.Singleton.IsHost)
@@ -212,6 +249,25 @@ public class NetworkGameplayService : NetworkBehaviour
                 _leaveSessionButton.onClick.Invoke();
             }
             SceneManager.LoadSceneAsync(_connectionScreen);
+        }
+        else if (NetworkManager.Singleton.IsServer)
+        {
+            var gameData = _networkVariable.Value;
+
+            for (int i = 0; i < gameData.Players.Count; i++)
+            {
+                var player = gameData.Players[i];
+                if (player.ClientId == clientID)
+                {
+                    player.IsTaken = false;
+                    gameData.Players[i] = player;
+                    gameData.RandomData++;
+                    _networkVariable.Value = gameData;
+
+                    Debug.Log($"Unassigning client {player.ClientId} from {i}");
+                    break;
+                }
+            }
         }
     }
 

@@ -10,6 +10,7 @@ public class HouseBehaviour : MonoBehaviour
 {
     [Inject] NetworkGameplayService _gameplayService;
 
+    [SerializeField] Image _houseIcon;
     [SerializeField] ResourceType _influence;
     [SerializeField] GameObject[] _influenceSteps;
     [SerializeField] Image[] _players;
@@ -28,7 +29,6 @@ public class HouseBehaviour : MonoBehaviour
 
     public void Setup()
     {
-        Debug.Log($"====Setting up player influcences {_influence.ToString()}");
         for (int i = 0; i < 4; i++)
         {
             int index = i;
@@ -41,7 +41,6 @@ public class HouseBehaviour : MonoBehaviour
                     var currentPosition = _players[index].transform.position;
                     currentPosition.y = _influenceSteps[x].transform.position.y;
                     _players[index].transform.position = currentPosition;
-                    Debug.Log($"Setting up player influcence {index} {x}");
                 })
                 .AddTo(_disposables);
         }

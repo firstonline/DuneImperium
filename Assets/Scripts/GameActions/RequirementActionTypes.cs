@@ -17,4 +17,6 @@ public enum RequirementActionTypes
     RequireMakerHook = 12,
     RequireNoSwordsman = 13,
     RequireSwordsman = 14,
+    RequireNoCouncilSeat = 15,
+    RequireCouncilSeat = 16
 }

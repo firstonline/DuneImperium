@@ -17,11 +17,25 @@ public class AreasService : NetworkBehaviour
     void VisitAgentAreaServerRpc(int areaId, int selectedExchange, ServerRpcParams rpcParams = default)
     {
         var agentArea = _agentAreaDatabase.GetItem(areaId);
-        var clientId = (ulong)rpcParams.Receive.SenderClientId;
-
-
         var gameData = _networkGameplayService.GameData;
-        var playerData = gameData.Players[(int)clientId];
+
+        int playerIndex = -1;
+
+        for (int i = 0; i < gameData.Players.Count; i++)
+        {
+            if (gameData.Players[i].ClientId == rpcParams.Receive.SenderClientId)
+            {
+                playerIndex = i;
+                break;
+            }
+        }
+
+        if (playerIndex == -1)
+        {
+            return;
+        }
+
+        var playerData = gameData.Players[playerIndex];
 
         if (CanVisitArea(playerData, agentArea))
         {
@@ -35,7 +49,7 @@ public class AreasService : NetworkBehaviour
                 PayCost(ref playerData, exchange);
                 ReceiveRewards(ref playerData, exchange);
 
-                gameData.Players[(int)clientId] = playerData;
+                gameData.Players[playerIndex] = playerData;
                 gameData.RandomData = gameData.RandomData + 1; // this enforce network variable change
                 _networkGameplayService.UpdateGameData(gameData);
                 VisitAgentAreaResponseClientRpc(true, rpcParams.Receive.SenderClientId);
@@ -178,6 +192,7 @@ public class AreasService : NetworkBehaviour
                     break;
 
                 case RewardActionTypes.AddCouncilSeat:
+                    playerData.HasCouncilSeat = true;
                     break;
 
                 case RewardActionTypes.DrawCard:
@@ -236,6 +251,8 @@ public class AreasService : NetworkBehaviour
             RequirementActionTypes.RequireMakerHook => playerData.Resources[ResourceType.MakerHook] >= requirement.Quantity,
             RequirementActionTypes.RequireSwordsman => !playerData.HaveSwordsman && _networkGameplayService.GameData.Players.Any(x => x.HaveSwordsman),
             RequirementActionTypes.RequireNoSwordsman => _networkGameplayService.GameData.Players.All(x => !x.HaveSwordsman),
+            RequirementActionTypes.RequireNoCouncilSeat => !playerData.HasCouncilSeat,
+            RequirementActionTypes.RequireCouncilSeat => playerData.HasCouncilSeat,
         };
         return meetsRequirement;
     }

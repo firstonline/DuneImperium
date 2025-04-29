@@ -13,33 +13,74 @@ MonoBehaviour:
   m_Name: AreaHighCouncil
   m_EditorClassIdentifier: 
   _id: 6
-  Name: Sietch Tabr
+  Name: High Council
   AgentIcon: {fileID: 11400000, guid: 1ce35bf4fe9233b45aa0d6b0344d41ed, type: 2}
   Reveal:
     HasCost: 0
-    CostActionDefinition: {fileID: 0}
-    CostQuantity: 0
+    CostActionDefinition:
+      Action: {fileID: 0}
+      Quantity: 0
     HasRequirement: 0
-    Requirement: {fileID: 0}
-    RequirementQuantity: 0
+    Requirement:
+      Action: {fileID: 0}
+      Quantity: 0
     Action: {fileID: 0}
     Quantity: 0
   Exchanges:
   - Requirements:
-    - Action: {fileID: 11400000, guid: 1dc0d0c47a39ae64480c4df352c95a31, type: 2}
-      Quantity: 2
+    - Action: {fileID: 11400000, guid: e031c74eaf1578449833e0e38243d917, type: 2}
+      Quantity: 1
     Costs:
     - Action: {fileID: 11400000, guid: f303749ae43ae60439b8e4a4f9b75aea, type: 2}
       Quantity: 5
     Rewards:
     - HasCost: 0
-      CostActionDefinition: {fileID: 0}
-      CostQuantity: 0
+      CostActionDefinition:
+        Action: {fileID: 0}
+        Quantity: 0
       HasRequirement: 0
-      Requirement: {fileID: 0}
-      RequirementQuantity: 0
+      Requirement:
+        Action: {fileID: 0}
+        Quantity: 0
       Action: {fileID: 11400000, guid: 3067b00c1de3b3d49ae44f66618d04a5, type: 2}
       Quantity: 1
+  - Requirements:
+    - Action: {fileID: 11400000, guid: 59393b90721262a48b236cf128f55112, type: 2}
+      Quantity: 1
+    Costs:
+    - Action: {fileID: 11400000, guid: f303749ae43ae60439b8e4a4f9b75aea, type: 2}
+      Quantity: 5
+    Rewards:
+    - HasCost: 0
+      CostActionDefinition:
+        Action: {fileID: 0}
+        Quantity: 0
+      HasRequirement: 0
+      Requirement:
+        Action: {fileID: 0}
+        Quantity: 0
+      Action: {fileID: 11400000, guid: 9434dc0a093ac5641b836ebbc17b757e, type: 2}
+      Quantity: 2
+    - HasCost: 0
+      CostActionDefinition:
+        Action: {fileID: 0}
+        Quantity: 0
+      HasRequirement: 0
+      Requirement:
+        Action: {fileID: 0}
+        Quantity: 0
+      Action: {fileID: 11400000, guid: 0f30b995364beea4c9223f23b85c283c, type: 2}
+      Quantity: 1
+    - HasCost: 0
+      CostActionDefinition:
+        Action: {fileID: 0}
+        Quantity: 0
+      HasRequirement: 0
+      Requirement:
+        Action: {fileID: 0}
+        Quantity: 0
+      Action: {fileID: 11400000, guid: 5c4cf0dd83b09dc48a8fce5e8ffe99c2, type: 2}
+      Quantity: 3
   IsMakerBoard: 0
   IsCombatArea: 1
   ImperialFlagReward:
