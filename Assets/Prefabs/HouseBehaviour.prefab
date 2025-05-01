@@ -684,7 +684,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36328a5a2b007da40adf5f5bc2e2c2af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _influence: 6
+  _houseIcon: {fileID: 4689039733158093284}
+  _house: 0
   _influenceSteps:
   - {fileID: 4569541413314860373}
   - {fileID: 4136158304720146823}

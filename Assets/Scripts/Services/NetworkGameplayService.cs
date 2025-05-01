@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UniDi;
 using UniRx;
 using Unity.Netcode;
@@ -12,38 +11,49 @@ using UnityEngine.UI;
 
 public enum ResourceType
 {
-    Water = 0,
-    Solari = 1,
-    Spice = 2,
-    BeneGesseritInfluence = 3,
-    FremenInfluence = 4,
-    SpacingGuildInfluence = 5,
-    EmperorInfluence = 6,
-    MakerHook = 7
+    Water,
+    Solari,
+    Spice,
+}
+
+public enum House
+{
+    Fremen = 0,
+    Emperror = 1,
+    BeneGesserit = 2,
+    SpacingGuild = 3,
 }
 
 public struct PlayerData : INetworkSerializable
 {
-    public static readonly int MAX_TROOPS = 12;
-    public static readonly int MAX_INFLUENCE = 6;
+    public const int MAX_TROOPS = 12;
+    public const int MAX_INFLUENCE = 6;
+    public const int ALLIANCE_INFLUENCE = 4;
 
     public bool IsTaken;
     public ulong ClientId;
 
+    public bool HasMakerHook;
     public bool HasCouncilSeat;
     public bool HaveSwordsman;
+
+
     public int AgentsCount;
     public int DeployedAgentsCount;
     public int GarrisonedTroopsCount;
     public int DeployedTroopsCount;
     public int WormsCount;
+    public Dictionary<House, bool> Alliances;
+    public Dictionary<House, int> Influences;
+    public Dictionary<ResourceType, int> Resources;
+
     public int CombatStrength => WormsCount * 3 + DeployedTroopsCount * 2;
 
-    public Dictionary<ResourceType, int> Resources;
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
         serializer.SerializeValue(ref IsTaken);
+        serializer.SerializeValue(ref HasMakerHook);
         serializer.SerializeValue(ref HasCouncilSeat);
         serializer.SerializeValue(ref HaveSwordsman);
         serializer.SerializeValue(ref AgentsCount);
@@ -52,34 +62,38 @@ public struct PlayerData : INetworkSerializable
         serializer.SerializeValue(ref DeployedTroopsCount);
         serializer.SerializeValue(ref WormsCount);
 
-        int length = 0;
-        int[] keys;
-        int[] values;
+        Resources = NetworkSerializationUtils.SerializeToDictionary<T, ResourceType>(serializer, Resources);
+        Alliances = NetworkSerializationUtils.SerializeToDictionary<T, House>(serializer, Alliances);
+        Influences = NetworkSerializationUtils.SerializeToDictionary<T, House>(serializer, Influences);
+    }
 
-        if (serializer.IsWriter)
-        {
-            keys = Resources.Keys.Select(x => (int)x).ToArray();
-            values = Resources.Values.ToArray();
-            length = Resources.Count;
-        }
-        else
-        {
-            keys = new int[length];
-            values = new int[length];
-        }
+    public static PlayerData Construct()
+    {
+        var playerData = new PlayerData();
+        playerData.AgentsCount = 2;
 
-        serializer.SerializeValue(ref length);
-        serializer.SerializeValue(ref keys);
-        serializer.SerializeValue(ref values);
-
-        if (serializer.IsReader)
+        var resources = new Dictionary<ResourceType, int>();
+        var itemTypes = Enum.GetValues(typeof(ResourceType));
+        foreach (var itemType in itemTypes)
         {
-            Resources = new Dictionary<ResourceType, int>();
-            for (int i = 0; i < length; i++)
-            {
-                Resources.Add((ResourceType)keys[i], values[i]);
-            }
+            resources.Add((ResourceType)itemType, 0);
         }
+        playerData.Resources = resources;
+        playerData.Resources[ResourceType.Water]++;
+
+        var houses = Enum.GetValues(typeof(House));
+        var alliances = new Dictionary<House, bool>();
+        var influences = new Dictionary<House, int>();
+
+        foreach (var house in houses)
+        {
+            alliances.Add((House)house, false);
+            influences.Add((House)house, 0);
+        }
+        playerData.Alliances = alliances;
+        playerData.Influences = influences;
+
+        return playerData;
     }
 }
 
@@ -125,15 +139,13 @@ public class NetworkGameplayService : NetworkBehaviour
     BehaviorSubject<GameData> _gameData = new BehaviorSubject<GameData>(new GameData());
 
     public GameData GameData => _gameData.Value;
+
+    public IObservable<GameData> ObserveGameData() => _gameData;
     public IObservable<PlayerData> ObservePlayerData(int index) => _gameData.Select(x =>
     {
         if (x.Players == null || x.Players.Count < index)
         {
-            var playerData = new PlayerData();
-            playerData.Resources = GenerateInventory();
-            playerData.AgentsCount = 2;
-            playerData.Resources[ResourceType.Water]++;
-            return playerData;
+            return PlayerData.Construct();
         }
         else
         {
@@ -158,10 +170,8 @@ public class NetworkGameplayService : NetworkBehaviour
             gameData.Players = new List<PlayerData> {  };
             for (int i = 0; i < 4; i++)
             {
-                var playerData = new PlayerData();
-                playerData.Resources = GenerateInventory();
-                playerData.AgentsCount = 2;
-                playerData.Resources[ResourceType.Water]++;
+                var playerData = PlayerData.Construct();
+
                 if (i == 0)
                 {
                     playerData.IsTaken = true;
@@ -204,17 +214,6 @@ public class NetworkGameplayService : NetworkBehaviour
         {
             _networkVariable.Value = gameData;
         }
-    }
-
-    Dictionary<ResourceType, int> GenerateInventory()
-    {
-        var inventory = new Dictionary<ResourceType, int>();
-        var itemTypes = Enum.GetValues(typeof(ResourceType));
-        foreach (var itemType in itemTypes)
-        {
-            inventory.Add((ResourceType)itemType, 0);
-        }
-        return inventory;
     }
 
     void OnClientConnected(ulong clientID)

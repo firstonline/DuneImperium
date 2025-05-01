@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using TMPro;
 using UniDi;
 using UniRx;
@@ -38,7 +37,7 @@ public class PlayerCombatBehaviour : MonoBehaviour
                 _worms[i].SetActive(true);
             }
 
-            _makerHook.gameObject.SetActive(x.Resources[ResourceType.MakerHook] > 0);
+            _makerHook.gameObject.SetActive(x.HasMakerHook);
         }).AddTo(_disposables);
     }
 
