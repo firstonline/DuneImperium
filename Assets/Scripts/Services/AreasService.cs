@@ -37,21 +37,24 @@ public class AreasService : NetworkBehaviour
 
         var agentArea = _agentAreaDatabase.GetItem(areaId);
         var playerData = gameData.Players[playerIndex];
+        playerData.CanDeploy = false;
+        playerData.DeployableTroopsCount = 0;
 
         if (ExchangeHelper.CanVisitArea(gameData, playerData, agentArea))
         {
             var exchange = agentArea.Exchanges[selectedExchange];
-            bool allowedToBuy = exchange.Requirements.All(x => ExchangeHelper.CheckRequirement(gameData, playerData, x));
-            bool canPay = ExchangeHelper.CanPayCost(playerData, exchange);
-            bool canGainRewards = ExchangeHelper.CanGainRewards(gameData, playerData, exchange);
+            bool isValid = ExchangeHelper.IsExchangeValid(gameData, playerData, exchange);
 
-            if (allowedToBuy && canPay && canGainRewards)
+            if (isValid)
             {
+                if (agentArea.IsCombatArea)
+                {
+                    ExchangeHelper.MakeCanDeploy(ref playerData);
+                }
+
                 ExchangeHelper.PayCost(ref playerData, exchange);
                 ExchangeHelper.ReceiveRewards(ref playerData, exchange);
                 gameData.Players[playerIndex] = playerData;
-
-                gameData.RandomData = gameData.RandomData + 1; // this enforce network variable change
 
                 AllianceUtils.RecalculateAlliance(ref gameData);
                 _networkGameplayService.UpdateGameData(gameData);

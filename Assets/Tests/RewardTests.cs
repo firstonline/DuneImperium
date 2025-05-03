@@ -75,21 +75,51 @@ public class RewardTests : MonoBehaviour
         Assert.AreEqual(playerData.Influences[house], resultCount);
     }
 
-    [TestCase(new object[] { 0, 1, 1 })]
-    [TestCase(new object[] { 3, 2, 5 })]
-    [TestCase(new object[] { 3, 5, 8 })]
-    [TestCase(new object[] { 8, 5, PlayerData.MAX_TROOPS })]
-    [TestCase(new object[] { PlayerData.MAX_TROOPS, 1, PlayerData.MAX_TROOPS })]
-    public void Troops(int haveCount, int addedCount, int resultCount)
+    [TestCase(new object[] { 0, 0, 1, 1 })]
+    [TestCase(new object[] { 3, 0, 2, 5 })]
+    [TestCase(new object[] { 3, 0, 5, 8 })]
+    [TestCase(new object[] { 3, 4, 5, 8 })]
+    [TestCase(new object[] { 3, 5, 5, 7 })]
+    [TestCase(new object[] { 5, 3, 5, 9 })]
+    [TestCase(new object[] { 8, 0, 5, PlayerData.MAX_TROOPS })]
+    [TestCase(new object[] { PlayerData.MAX_TROOPS, 0, 1, PlayerData.MAX_TROOPS })]
+    [TestCase(new object[] { 0, PlayerData.MAX_TROOPS, 1, 0 })]
+    [TestCase(new object[] { 0, 8, 5, 4 })]
+    [TestCase(new object[] { 0, 11, 2, 1 })]
+    public void Troops(int garrisonedTroopsCount, int deployedTroopsCount, int addedCount,  int resultCount)
+    {
+        var reward = RewardBuilder.Build().WithAction(RewardActionTypes.AddTroop).WithQuantity(addedCount);
+        var exchange = ExchangeBuilder.Build().WithReward(reward);
+        var playerData = _gameData.Players[0];
+        playerData.GarrisonedTroopsCount = garrisonedTroopsCount;
+        playerData.DeployedTroopsCount = deployedTroopsCount;
+        _gameData.Players[0] = playerData;
+
+        ExchangeHelper.ReceiveRewards(ref playerData, exchange);
+        Assert.AreEqual(resultCount, playerData.GarrisonedTroopsCount);
+    }
+
+    [TestCase(new object[] { 1, 0, 1 })]
+    [TestCase(new object[] { 2, 0, 2 })]
+    [TestCase(new object[] { 0, 2, 2 })]
+    [TestCase(new object[] { 1, 1, 2 })]
+    [TestCase(new object[] { 2, 2, 4 })]
+    [TestCase(new object[] { 3, 2, 4 })]
+    [TestCase(new object[] { 3, 5, 7 })]
+    [TestCase(new object[] { 8, 5, 6 })]
+    [TestCase(new object[] { 10, 5, 4 })]
+    [TestCase(new object[] { PlayerData.MAX_TROOPS, 1, 2 })]
+    public void DeployableTroops(int haveCount, int addedCount, int resultCount)
     {
         var reward = RewardBuilder.Build().WithAction(RewardActionTypes.AddTroop).WithQuantity(addedCount);
         var exchange = ExchangeBuilder.Build().WithReward(reward);
         var playerData = _gameData.Players[0];
         playerData.GarrisonedTroopsCount = haveCount;
+        ExchangeHelper.MakeCanDeploy(ref playerData);
         _gameData.Players[0] = playerData;
 
         ExchangeHelper.ReceiveRewards(ref playerData, exchange);
-        Assert.AreEqual(playerData.GarrisonedTroopsCount, resultCount);
+        Assert.AreEqual(playerData.DeployableTroopsCount, resultCount);
     }
 
     [TestCase(new object[] { 0, 1, 1 })]

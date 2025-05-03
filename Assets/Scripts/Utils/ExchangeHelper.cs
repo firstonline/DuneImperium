@@ -5,6 +5,20 @@ using UnityEngine;
 
 public static class ExchangeHelper 
 {
+    public static void MakeCanDeploy(ref PlayerData playerData)
+    {
+        playerData.CanDeploy = true;
+        playerData.DeployableTroopsCount = Mathf.Min(playerData.GarrisonedTroopsCount, 2);
+    }
+
+    public static bool IsExchangeValid(GameData gameData, PlayerData playerData, ExchangeDefinition exchange)
+    {
+        bool allowedToBuy = exchange.Requirements.All(x => CheckRequirement(gameData, playerData, x));
+        bool canPay = CanPayCost(playerData, exchange);
+        bool canGainRewards = CanGainRewards(gameData, playerData, exchange);
+        return allowedToBuy && canPay && canGainRewards;
+    }
+
     public static bool CanVisitArea(GameData gameData, PlayerData playerData, AgentAreaDefinition agentArea)
     {
         if (!agentArea)
@@ -107,7 +121,10 @@ public static class ExchangeHelper
             switch (reward.Action.Type)
             {
                 case RewardActionTypes.AddTroop:
-                    playerData.GarrisonedTroopsCount = Mathf.Min(playerData.GarrisonedTroopsCount + reward.Quantity, PlayerData.MAX_TROOPS - playerData.DeployedTroopsCount);
+                    var prevTroopsCount = playerData.GarrisonedTroopsCount;
+                    var currentTroopsCount = Mathf.Min(playerData.GarrisonedTroopsCount + reward.Quantity, PlayerData.MAX_TROOPS - playerData.DeployedTroopsCount);
+                    playerData.DeployableTroopsCount += (currentTroopsCount - prevTroopsCount);
+                    playerData.GarrisonedTroopsCount = currentTroopsCount;
                     break;
 
                 case RewardActionTypes.AddSpice:

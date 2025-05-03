@@ -1,3 +1,4 @@
+using Codice.CM.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,10 +37,11 @@ public struct PlayerData : INetworkSerializable
     public bool HasMakerHook;
     public bool HasCouncilSeat;
     public bool HaveSwordsman;
-
+    public bool CanDeploy;
 
     public int AgentsCount;
     public int DeployedAgentsCount;
+    public int DeployableTroopsCount;
     public int GarrisonedTroopsCount;
     public int DeployedTroopsCount;
     public int WormsCount;
@@ -49,13 +51,15 @@ public struct PlayerData : INetworkSerializable
 
     public int CombatStrength => WormsCount * 3 + DeployedTroopsCount * 2;
 
-
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
         serializer.SerializeValue(ref IsTaken);
+        serializer.SerializeValue(ref ClientId);
         serializer.SerializeValue(ref HasMakerHook);
         serializer.SerializeValue(ref HasCouncilSeat);
         serializer.SerializeValue(ref HaveSwordsman);
+        serializer.SerializeValue(ref CanDeploy);
+        serializer.SerializeValue(ref DeployableTroopsCount);
         serializer.SerializeValue(ref AgentsCount);
         serializer.SerializeValue(ref DeployedAgentsCount);
         serializer.SerializeValue(ref GarrisonedTroopsCount);
@@ -99,6 +103,7 @@ public struct PlayerData : INetworkSerializable
 
 public struct GameData : INetworkSerializable
 {
+    public int CurrentPlayerIndex;
     public List<PlayerData> Players;
     public int RandomData;
 
@@ -143,13 +148,27 @@ public class NetworkGameplayService : NetworkBehaviour
     public IObservable<GameData> ObserveGameData() => _gameData;
     public IObservable<PlayerData> ObservePlayerData(int index) => _gameData.Select(x =>
     {
-        if (x.Players == null || x.Players.Count < index)
+        if (x.Players != null && x.Players.Count > index)
         {
-            return PlayerData.Construct();
+            return x.Players[index];
+
         }
         else
         {
-            return x.Players[index];
+            return PlayerData.Construct();
+        }
+    });
+
+    public IObservable<PlayerData> ObserveLocalPlayerData() => _gameData.Select(x =>
+    {
+        if (x.Players != null && x.Players.Any(x => x.IsTaken && x.ClientId == NetworkManager.Singleton.LocalClientId))
+        {
+            var localPlayerData = x.Players.First(x => x.IsTaken && x.ClientId == NetworkManager.Singleton.LocalClientId);
+            return localPlayerData;
+        }
+        else
+        {
+            return PlayerData.Construct();
         }
     });
 
@@ -212,13 +231,51 @@ public class NetworkGameplayService : NetworkBehaviour
     {
         if (NetworkManager.Singleton != null)
         {
+            gameData.RandomData++;
             _networkVariable.Value = gameData;
+        }
+    }
+
+    public void DeployTroops(int count)
+    {
+        DeployTroopsServerRpc(count);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void DeployTroopsServerRpc(int count, ServerRpcParams rpcParams = default)
+    {
+        var gameData = GameData;
+        int playerIndex = -1;
+
+        for (int i = 0; i < gameData.Players.Count; i++)
+        {
+            if (gameData.Players[i].ClientId == rpcParams.Receive.SenderClientId)
+            {
+                playerIndex = i;
+                break;
+            }
+        }
+
+        if (playerIndex == -1)
+        {
+            return;
+        }
+
+        var playerData = gameData.Players[playerIndex];
+
+        if (playerData.DeployableTroopsCount <= count)
+        {
+            playerData.DeployableTroopsCount -= count;
+            playerData.GarrisonedTroopsCount -= count;
+            playerData.DeployedTroopsCount += count;
+
+            gameData.Players[playerIndex] = playerData;
+            UpdateGameData(gameData);
         }
     }
 
     void OnClientConnected(ulong clientID)
     {
-        Debug.Log($"Client Connected {clientID}");
         var gameData = _networkVariable.Value;
 
         for (int i = 0; i < gameData.Players.Count; i++)
@@ -231,7 +288,6 @@ public class NetworkGameplayService : NetworkBehaviour
                 gameData.Players[i] = player;
                 gameData.RandomData++;
                 _networkVariable.Value = gameData;
-                Debug.Log($"Assigning client {player.ClientId} to {i}");
                 break;
             }
         }
@@ -262,8 +318,6 @@ public class NetworkGameplayService : NetworkBehaviour
                     gameData.Players[i] = player;
                     gameData.RandomData++;
                     _networkVariable.Value = gameData;
-
-                    Debug.Log($"Unassigning client {player.ClientId} from {i}");
                     break;
                 }
             }
