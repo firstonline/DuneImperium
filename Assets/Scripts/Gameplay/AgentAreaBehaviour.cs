@@ -121,7 +121,6 @@ public class AgentAreaBehaviour : MonoBehaviour
         _imperialFlagBehaviour.Setup(_definition.ImperialFlagReward);
 
         _agentIcon.sprite = _definition.AgentIcon.Icon;
-        _agentIcon.color = _definition.AgentIcon.Color;
         _combatIcon.gameObject.SetActive(_definition.IsCombatArea);
 
         EditorUtils.SetDirty(_agentIcon);

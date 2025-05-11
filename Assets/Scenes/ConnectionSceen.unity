@@ -1764,6 +1764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19806ee362269fa47a69c6e2aa33e4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _widgetConfiguration: {fileID: 11400000, guid: ecbbe07ef70e25443b4b8f119294a706, type: 2}
 --- !u!4 &857179923
 Transform:
   m_ObjectHideFlags: 0
@@ -3216,8 +3217,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1740506678}
   m_HandleRect: {fileID: 1740506677}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

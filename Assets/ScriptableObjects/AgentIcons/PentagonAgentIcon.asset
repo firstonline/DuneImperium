@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c413405a5cf24d840bd1eb10631fc6b9, type: 3}
   m_Name: PentagonAgentIcon
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  Color: {r: 0, g: 0.7735849, b: 0.15202479, a: 1}
+  Icon: {fileID: 3250739823794627738, guid: 64e087b990c542f46a29dc78c818d27a, type: 3}

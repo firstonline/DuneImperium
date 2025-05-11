@@ -5,5 +5,4 @@ using UnityEngine;
 public class AgentIconDefinition : ScriptableObject
 {
     public Sprite Icon;
-    public Color Color;
 }

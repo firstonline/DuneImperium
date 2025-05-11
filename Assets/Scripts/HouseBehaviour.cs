@@ -30,7 +30,7 @@ public class HouseBehaviour : MonoBehaviour
 
     public void Setup()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < _gameplayService.PlayersCount; i++)
         {
             int index = i;
 
@@ -54,6 +54,11 @@ public class HouseBehaviour : MonoBehaviour
                     _houseIcon.color = hasAlliance ? new Color(1, 1, 1, 0.5f) : Color.white;
                 })
                 .AddTo(_disposables);
+        }
+
+        for (int i = _gameplayService.PlayersCount; i < 4; i++)
+        {
+            _players[i].gameObject.SetActive(false);
         }
     }
 }

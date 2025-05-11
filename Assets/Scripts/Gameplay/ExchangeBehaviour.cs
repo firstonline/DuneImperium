@@ -15,6 +15,12 @@ public class ExchangeBehaviour : MonoBehaviour
     {
         UnityUtils.HideAllChildren(_rewardsParent);
         UnityUtils.HideAllChildren(_costParent);
+        _separator.gameObject.SetActive(false);
+        _councilSeatBehaviour.gameObject.SetActive(false);
+        if (exchange.Rewards.Count == 0)
+        {
+            return;
+        }
 
         if (exchange.Rewards[0].Action.Type == RewardActionTypes.AddCouncilSeat)
         {

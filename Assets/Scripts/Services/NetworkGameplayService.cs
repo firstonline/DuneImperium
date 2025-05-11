@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UniDi;
 using UniRx;
+using Unity.Multiplayer.Widgets;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -45,6 +46,7 @@ public struct PlayerData : INetworkSerializable
     public int GarrisonedTroopsCount;
     public int DeployedTroopsCount;
     public int WormsCount;
+    public List<int> Cards; 
     public Dictionary<House, bool> Alliances;
     public Dictionary<House, int> Influences;
     public Dictionary<ResourceType, int> Resources;
@@ -69,9 +71,21 @@ public struct PlayerData : INetworkSerializable
         Resources = NetworkSerializationUtils.SerializeToDictionary<T, ResourceType>(serializer, Resources);
         Alliances = NetworkSerializationUtils.SerializeToDictionary<T, House>(serializer, Alliances);
         Influences = NetworkSerializationUtils.SerializeToDictionary<T, House>(serializer, Influences);
+        
+        if (serializer.IsWriter)
+        {
+            int[] cards = Cards.ToArray();
+            serializer.SerializeValue(ref cards);
+        }
+        else
+        {
+            int[] cards = new int[0];
+            serializer.SerializeValue(ref cards);
+            Cards = cards.ToList();
+        }
     }
 
-    public static PlayerData Construct()
+    public static PlayerData Construct(List<int> initialDeck = null)
     {
         var playerData = new PlayerData();
         playerData.AgentsCount = 2;
@@ -96,6 +110,13 @@ public struct PlayerData : INetworkSerializable
         }
         playerData.Alliances = alliances;
         playerData.Influences = influences;
+
+        playerData.Cards = new List<int>();
+
+        if (initialDeck != null)
+        {
+            playerData.Cards.AddRange(initialDeck);
+        }
 
         return playerData;
     }
@@ -136,15 +157,17 @@ public struct GameData : INetworkSerializable
 public class NetworkGameplayService : NetworkBehaviour
 {
     [Inject] AreasService _areasService;
+    [Inject] CardsDatabase _cardsDatabase;
 
     [SerializeField] string _connectionScreen;
     [SerializeField] Button _leaveSessionButton;
+    [SerializeField] WidgetConfiguration _widgetConfiguration;
 
     NetworkVariable<GameData> _networkVariable = new NetworkVariable<GameData>();
     BehaviorSubject<GameData> _gameData = new BehaviorSubject<GameData>(new GameData());
 
+    public int PlayersCount => _widgetConfiguration.MaxPlayers;
     public GameData GameData => _gameData.Value;
-
     public IObservable<GameData> ObserveGameData() => _gameData;
     public IObservable<PlayerData> ObservePlayerData(int index) => _gameData.Select(x =>
     {
@@ -187,9 +210,9 @@ public class NetworkGameplayService : NetworkBehaviour
             var gameData = new GameData();
     
             gameData.Players = new List<PlayerData> {  };
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < PlayersCount; i++)
             {
-                var playerData = PlayerData.Construct();
+                var playerData = PlayerData.Construct(_cardsDatabase.StartingDeck.Select(x => x.ID).ToList());
 
                 if (i == 0)
                 {

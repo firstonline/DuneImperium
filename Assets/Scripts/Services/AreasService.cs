@@ -7,15 +7,16 @@ using UnityEngine;
 public class AreasService : NetworkBehaviour
 {
     [Inject] AgentAreaDatabase _agentAreaDatabase;
+    [Inject] CardsDatabase _cardsDatabase;
     [Inject] NetworkGameplayService _networkGameplayService;
 
-    public void VisitAgentArea(int areaId, int selectedExchange)
+    public void VisitAgentArea(CardDefinition card, int areaId, int selectedExchange)
     {
-        VisitAgentAreaServerRpc(areaId, selectedExchange);
+        VisitAgentAreaServerRpc(card.ID, areaId, selectedExchange);
     }
 
     [ServerRpc(RequireOwnership = false)]
-    void VisitAgentAreaServerRpc(int areaId, int selectedExchange, ServerRpcParams rpcParams = default)
+    void VisitAgentAreaServerRpc(int cardId, int areaId, int selectedExchange, ServerRpcParams rpcParams = default)
     {
         var gameData = _networkGameplayService.GameData;
 
@@ -36,11 +37,12 @@ public class AreasService : NetworkBehaviour
         }
 
         var agentArea = _agentAreaDatabase.GetItem(areaId);
+        var card = _cardsDatabase.GetItem(cardId);
         var playerData = gameData.Players[playerIndex];
         playerData.CanDeploy = false;
         playerData.DeployableTroopsCount = 0;
 
-        if (ExchangeHelper.CanVisitArea(gameData, playerData, agentArea))
+        if (ExchangeHelper.CanVisitArea(card, gameData, playerData, agentArea))
         {
             var exchange = agentArea.Exchanges[selectedExchange];
             bool isValid = ExchangeHelper.IsExchangeValid(gameData, playerData, exchange);

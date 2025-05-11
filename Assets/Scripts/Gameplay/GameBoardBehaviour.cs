@@ -15,6 +15,7 @@ public class GameBoard : MonoBehaviour
     [SerializeField] Button _deployTroopsBtn;
     [SerializeField] SelectExchangePopup _selectExchangePopup;
     [SerializeField] DeployTroopsPopup _deployTroopsPopup;
+    [SerializeField] PlayerHandBehaviour _playerHand;
 
     CompositeDisposable _disposables = new();
 
@@ -50,17 +51,20 @@ public class GameBoard : MonoBehaviour
 
     void OnAreaClicked(AgentAreaDefinition definition)
     {
+        if (_playerHand.SelectedCard == null)
+            return;
+
         if(definition.Exchanges.Count > 1)
         {
             _selectExchangePopup.Show(definition.Exchanges, (index) =>
             {
-                _areaService.VisitAgentArea(definition.ID, index);
+                _areaService.VisitAgentArea(_playerHand.SelectedCard, definition.ID, index);
 
             });
         }
         else
         {
-            _areaService.VisitAgentArea(definition.ID, 0);
+            _areaService.VisitAgentArea(_playerHand.SelectedCard, definition.ID, 0);
         }
        
     }

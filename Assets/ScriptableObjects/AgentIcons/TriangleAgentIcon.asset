@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c413405a5cf24d840bd1eb10631fc6b9, type: 3}
   m_Name: TriangleAgentIcon
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  Color: {r: 1, g: 0.9263844, b: 0, a: 1}
+  Icon: {fileID: 7227182498921014022, guid: cc5aee4a90359754ca0079841465a6d7, type: 3}

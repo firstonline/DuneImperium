@@ -19,9 +19,15 @@ public static class ExchangeHelper
         return allowedToBuy && canPay && canGainRewards;
     }
 
-    public static bool CanVisitArea(GameData gameData, PlayerData playerData, AgentAreaDefinition agentArea)
+    public static bool CanVisitArea(CardDefinition card, GameData gameData, PlayerData playerData, AgentAreaDefinition agentArea)
     {
         if (!agentArea)
+            return false;
+
+        if (!playerData.Cards.Any(x => x == card.ID))
+            return false;
+
+        if (!card.AgentIcons.Contains(agentArea.AgentIcon))
             return false;
 
         return CheckRequirement(gameData, playerData, agentArea.Requirement);
@@ -86,6 +92,7 @@ public static class ExchangeHelper
             RequirementActionTypes.RequireNoSwordsman => gameData.Players.All(x => !x.HaveSwordsman),
             RequirementActionTypes.RequireNoCouncilSeat => !playerData.HasCouncilSeat,
             RequirementActionTypes.RequireCouncilSeat => playerData.HasCouncilSeat,
+            _ => throw new NotImplementedException(),
         };
         return meetsRequirement;
     }

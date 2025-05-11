@@ -15,6 +15,7 @@ public class RewardBehaviour : MonoBehaviour
 
         if (reward.Quantity == 1
             && reward.Action.Type != RewardActionTypes.AddSolari
+            && reward.Action.Type != RewardActionTypes.AddPersuation
             && reward.Action.Type != RewardActionTypes.AddSpice)
         {
             _quantity.text = "";

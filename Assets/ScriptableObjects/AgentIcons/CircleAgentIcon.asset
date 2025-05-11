@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c413405a5cf24d840bd1eb10631fc6b9, type: 3}
   m_Name: CircleAgentIcon
   m_EditorClassIdentifier: 
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  Color: {r: 0.6080961, g: 0, b: 1, a: 1}
+  Icon: {fileID: 1954729119827497602, guid: f35b256342cd7364580d5082c99d4df0, type: 3}

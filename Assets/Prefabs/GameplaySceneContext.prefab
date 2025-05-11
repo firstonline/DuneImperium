@@ -153,7 +153,7 @@ MonoBehaviour:
   _networkGameplay: {fileID: 5353582164968950265}
   _areaService: {fileID: 7941000850663496788}
   _agentAreaDatabase: {fileID: 11400000, guid: 4301578d960750946844bffb7c54b8e9, type: 2}
-  _resourcesDatabase: {fileID: 11400000, guid: ff28eec3bcffc7a4a9bb2179a76d9fad, type: 2}
+  _cardDatabase: {fileID: 11400000, guid: 7a5687cb72e9e3b4588c0e6be346af51, type: 2}
 --- !u!1 &5065042113202907402
 GameObject:
   m_ObjectHideFlags: 0

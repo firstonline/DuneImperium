@@ -11,7 +11,7 @@ public class PrefabsPool<T> where T : UnityEngine.Object
 
     ObjectPool<T> _pool;
 
-    public PrefabsPool(T prefab, Transform parent, int capacity)
+    public PrefabsPool(T prefab, Transform parent, int capacity = 10)
     {
         _prefab = prefab;
         _parent = parent;
