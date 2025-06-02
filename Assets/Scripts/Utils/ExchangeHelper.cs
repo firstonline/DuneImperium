@@ -30,6 +30,15 @@ public static class ExchangeHelper
         if (!card.AgentIcons.Contains(agentArea.AgentIcon))
             return false;
 
+        if (gameData.GameState != GameState.AgentsPhase)
+            return false;
+
+        if (playerData.Revealed)
+            return false;
+
+        if (playerData.AgentsCount <= playerData.DeployedAgentsCount)
+            return false;
+
         return CheckRequirement(gameData, playerData, agentArea.Requirement);
     }
 

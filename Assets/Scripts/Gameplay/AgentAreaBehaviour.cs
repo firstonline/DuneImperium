@@ -4,7 +4,6 @@ using System.Linq;
 using TMPro;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
@@ -24,12 +23,19 @@ public class AgentAreaBehaviour : MonoBehaviour
 
     Button _button;
 
-    public IObservable<Unit> ObserveClicked() => _button.OnClickAsObservable();
+    public IObservable<Unit> ObserveClicked()
+    { 
+        if (_button == null)
+        {
+            _button = GetComponent<Button>();
+        }
+        return _button.OnClickAsObservable();
+    }
+
     public AgentAreaDefinition Definition => _definition;
 
     void Awake()
     {
-        _button = GetComponent<Button>();
         Setup();
     }
 

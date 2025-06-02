@@ -1,14 +1,12 @@
 using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
+using UnityEngine.Playables;
 
 public class AgentIconsTest : MonoBehaviour
 {
-    GameData _gameData;
+     GameData _gameData;
      AgentIconDefinition _agentIcon1;
      AgentIconDefinition _agentIcon2;
      AgentIconDefinition _agentIcon3;
@@ -28,6 +26,7 @@ public class AgentIconsTest : MonoBehaviour
     public void Setup()
     {
         _gameData = new GameData();
+        _gameData.GameState = GameState.AgentsPhase;
         _gameData.Players = new()
         {
             PlayerData.Construct(),
@@ -35,6 +34,14 @@ public class AgentIconsTest : MonoBehaviour
             PlayerData.Construct(),
             PlayerData.Construct()
         };
+        for (int i = 0; i < _gameData.Players.Count; i++)
+        {
+            var player = _gameData.Players[i];
+
+            player.Cards = new List<int> { 0, 2, 3, 4, 5, 6 };
+            _gameData.Players[i] = player;
+        }
+
         _agentIcon1 = ScriptableObject.CreateInstance<AgentIconDefinition>();
         _agentIcon2 = ScriptableObject.CreateInstance<AgentIconDefinition>();
         _agentIcon3 = ScriptableObject.CreateInstance<AgentIconDefinition>();
@@ -50,6 +57,37 @@ public class AgentIconsTest : MonoBehaviour
         _agentArea1 = AgentAreaBuilder.Build().WithAgentIcon(_agentIcon1);
         _agentArea2 = AgentAreaBuilder.Build().WithAgentIcon(_agentIcon2);
         _agentArea3 = AgentAreaBuilder.Build().WithAgentIcon(_agentIcon3);
+    }
+
+    [TestCase(new object[] { 1, 1}, ExpectedResult = false)]
+    [TestCase(new object[] { 1, 0}, ExpectedResult = true)]
+    [TestCase(new object[] { 2, 1}, ExpectedResult = true)]
+    [TestCase(new object[] { 3, 2}, ExpectedResult = true)]
+    [TestCase(new object[] { 3, 3}, ExpectedResult = false)]
+    public bool HaveAgents(int agentsCount, int deployedAgentsCount)
+    {
+        var playerData = _gameData.Players[0];
+        playerData.AgentsCount = agentsCount;
+        playerData.DeployedAgentsCount = deployedAgentsCount;
+        return ExchangeHelper.CanVisitArea(_card1, _gameData, playerData, _agentArea1);
+    }
+
+    [TestCase(new object[] { true }, ExpectedResult = false)]
+    [TestCase(new object[] { false }, ExpectedResult = true)]
+    public bool PlayerAlreadyRevealed(bool revealed)
+    {
+        var playerData = _gameData.Players[0];
+        playerData.Revealed = revealed;
+        return ExchangeHelper.CanVisitArea(_card1, _gameData, playerData, _agentArea1);
+    }
+
+    [TestCase(new object[] { GameState.Combat }, ExpectedResult = false)]
+    [TestCase(new object[] { GameState.AgentsPhase }, ExpectedResult = true)]
+    public bool NotAgentsPhase(GameState state)
+    {
+        _gameData.GameState = state;
+        var playerData = _gameData.Players[0];
+        return ExchangeHelper.CanVisitArea(_card1, _gameData, playerData, _agentArea1);
     }
 
     [Test]

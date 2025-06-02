@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CouncilSeatBehaviour : MonoBehaviour
 {
-    [Inject] NetworkGameplayService _gameplayService;
+    [Inject] GameplayService _gameplayService;
     [SerializeField] Image[] _councilSeats;
     CompositeDisposable _disposables = new();
 

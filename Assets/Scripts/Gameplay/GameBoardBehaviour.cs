@@ -9,8 +9,7 @@ using UnityEngine.UI;
 
 public class GameBoard : MonoBehaviour
 {
-    [Inject] AreasService _areaService;
-    [Inject] NetworkGameplayService _gameplayService;
+    [Inject] AgentsPhaseService _agentsPhaseService;
 
     [SerializeField] Button _deployTroopsBtn;
     [SerializeField] SelectExchangePopup _selectExchangePopup;
@@ -34,13 +33,12 @@ public class GameBoard : MonoBehaviour
 
         _deployTroopsBtn.OnClickAsObservable().Subscribe(_ =>
         {
-            var player = _gameplayService.GameData.Players.First(x => x.ClientId == NetworkManager.Singleton.LocalClientId);
-            _deployTroopsPopup.Show((count) => { _gameplayService.DeployTroops(count); }, player.DeployableTroopsCount);
+            _deployTroopsPopup.Show((count) => { _agentsPhaseService.DeployTroops(count); }, _agentsPhaseService.DeployableTroopsCount);
         }).AddTo(_disposables);
 
-        _gameplayService.ObserveLocalPlayerData().Subscribe(x =>
+        _agentsPhaseService.ObserveCanDeploy().Subscribe(canDeploy =>
         {
-            _deployTroopsBtn.gameObject.SetActive(x.CanDeploy);
+            _deployTroopsBtn.gameObject.SetActive(canDeploy);
         }).AddTo(_disposables);
     }
 
@@ -58,13 +56,13 @@ public class GameBoard : MonoBehaviour
         {
             _selectExchangePopup.Show(definition.Exchanges, (index) =>
             {
-                _areaService.VisitAgentArea(_playerHand.SelectedCard, definition.ID, index);
+                _agentsPhaseService.VisitAgentArea(_playerHand.SelectedCard.ID, definition.ID, index);
 
             });
         }
         else
         {
-            _areaService.VisitAgentArea(_playerHand.SelectedCard, definition.ID, 0);
+            _agentsPhaseService.VisitAgentArea(_playerHand.SelectedCard.ID, definition.ID, 0);
         }
        
     }

@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      TirangleAgentIcon_0: 7227182498921014022
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

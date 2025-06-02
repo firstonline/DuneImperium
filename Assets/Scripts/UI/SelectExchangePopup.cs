@@ -9,12 +9,13 @@ using UnityEngine.UI;
 
 public class SelectExchangePopup : MonoBehaviour
 {
-    [Inject] NetworkGameplayService _gameplayService;
+    [Inject] GameplayService _gameplayService;
 
     [SerializeField] Button _closeButton;
     [SerializeField] Button _option1Btn;
     [SerializeField] ExchangeBehaviour _exchange1Behaviour;
     [SerializeField] Button _option2Btn;
+
     [SerializeField] ExchangeBehaviour _exchange2Behaviour;
 
     CompositeDisposable _disposables = new();
@@ -50,13 +51,8 @@ public class SelectExchangePopup : MonoBehaviour
     void SetupButton(Button button, ExchangeDefinition exchange)
     {
         var gameData = _gameplayService.GameData;
-        foreach (var item in gameData.Players)
-        {
-            Debug.Log($"item");
-        }
 
         var playerData = gameData.Players.First(x => x.ClientId == NetworkManager.Singleton.LocalClientId);
-
 
         button.interactable = ExchangeHelper.IsExchangeValid(gameData, playerData, exchange);
     }

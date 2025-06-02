@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      PentagonAgentIcon_0: 3250739823794627738
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

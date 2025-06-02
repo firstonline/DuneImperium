@@ -1,6 +1,3 @@
-using NaughtyAttributes;
-using System;
-using System.Collections;
 using System.Linq;
 using UniDi;
 using UniRx;
@@ -9,7 +6,7 @@ using UnityEngine.UI;
 
 public class HouseBehaviour : MonoBehaviour
 {
-    [Inject] NetworkGameplayService _gameplayService;
+    [Inject] GameplayService _gameplayService;
 
     [SerializeField] Image _houseIcon;
     [SerializeField] House _house;

@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      DestroyTroop_0: 7738890446035250635
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

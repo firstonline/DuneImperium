@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayersPanelUI : MonoBehaviour
 {
     [Inject] DiContainer _container;
-    [Inject] NetworkGameplayService _gameplayService;
+    [Inject] GameplayService _gameplayService;
     [SerializeField] PlayerInfoUI _playerInfoPrefab;
 
     PrefabsPool<PlayerInfoUI> _playerInfoPool;

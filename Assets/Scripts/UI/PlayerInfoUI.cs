@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerInfoUI : MonoBehaviour
 {
-    [Inject] NetworkGameplayService networkGameplayService;
+    [Inject] GameplayService networkGameplayService;
 
     [SerializeField] TextMeshProUGUI _water;
     [SerializeField] TextMeshProUGUI _solari;
@@ -41,6 +41,12 @@ public class PlayerInfoUI : MonoBehaviour
         _water.text = playerData.Resources[ResourceType.Water].ToString();
         _solari.text = playerData.Resources[ResourceType.Solari].ToString();
         _spice.text = playerData.Resources[ResourceType.Spice].ToString();
+
+        if (_playerIndex == 0)
+        {
+            Debug.Log($"Updating Player Info{playerData.Resources[ResourceType.Spice]}");
+        }
+
         _availableAgents.text = (playerData.AgentsCount - playerData.DeployedAgentsCount).ToString();
 
         _fremenAllianceToken.color = playerData.Alliances[House.Fremen] ? Color.white : new Color(0.5f, 0.5f, 0.5f, 0.5f);

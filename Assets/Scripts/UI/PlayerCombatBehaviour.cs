@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerCombatBehaviour : MonoBehaviour
 {
-    [Inject] NetworkGameplayService _gameplayService;
+    [Inject] GameplayService _gameplayService;
 
     [SerializeField] int _playerIndex;
     [SerializeField] Image _playerIcon;

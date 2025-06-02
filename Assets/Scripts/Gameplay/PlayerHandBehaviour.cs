@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerHandBehaviour : MonoBehaviour
 {
-    [Inject] NetworkGameplayService _gameplayService;
+    [Inject] GameplayService _gameplayService;
     [Inject] CardsDatabase _cardsDatabase;
 
     [SerializeField] CardBehaviour _cardPrefab;
