@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using NaughtyAttributes;
 using System;
 using UniDi;
 using UniRx;
@@ -18,6 +19,8 @@ public class NetworkGameplayService : NetworkBehaviour
     CompositeDisposable _disposables = new();
     NetworkVariable<GameData> _networkVariable = new NetworkVariable<GameData>();
 
+    int iterator = 0;
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -32,25 +35,17 @@ public class NetworkGameplayService : NetworkBehaviour
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             _gameData.Subscribe(updatedGameData =>
             {
-                updatedGameData.Iterator++;
-                Debug.Log("updating global values");
-                foreach (var news in updatedGameData.Players[0].Resources)
-                {
-                    Debug.Log($"{news.Key} - {news.Value}");
-                }
+                iterator++;
+                updatedGameData.Iterator = iterator;
                 _networkVariable.Value = updatedGameData;
+                DataUpdatedClientRpc();
             }).AddTo(_disposables);
         }
         else
         {
             _gameData.OnNext(_networkVariable.Value);
-            _networkVariable.OnValueChanged += (oldData, newData) =>
+           _networkVariable.OnValueChanged += (oldData, newData) =>
             {
-                Debug.Log("updating local values");
-                foreach (var news in newData.Players[0].Resources)
-                {
-                    Debug.Log($"{news.Key} - {news.Value}");
-                }
                 _gameData.OnNext(newData);
             };
         }
@@ -58,7 +53,7 @@ public class NetworkGameplayService : NetworkBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
     }
 
-    public override void OnDestroy()
+public override void OnDestroy()
     {
         base.OnDestroy();
         if (NetworkManager.Singleton != null)
@@ -67,6 +62,11 @@ public class NetworkGameplayService : NetworkBehaviour
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
         }
         _disposables.Clear();
+    }
+
+    [ClientRpc]
+    void DataUpdatedClientRpc()
+    {
     }
 
     void OnClientConnected(ulong clientID)
